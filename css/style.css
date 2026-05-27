@@ -2088,7 +2088,7 @@ ul {
   }
 
   .hero {
-    padding: 3.75rem max(1.5rem, 5vw) 2rem;
+    padding: calc(5rem + 0.5rem) max(1.5rem, 5vw) 2rem;
   }
 
   .hero-inner {
