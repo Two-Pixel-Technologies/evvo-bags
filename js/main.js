@@ -17,16 +17,49 @@ burger.addEventListener('click', () => {
   burger.setAttribute('aria-expanded', 'true');
 });
 
-const closeMobileNav = () => {
+// prevent background scroll when mobile nav is open
+function openMobileNav() {
+  mobNav.classList.add('open');
+  mobNav.setAttribute('aria-hidden', 'false');
+  burger.setAttribute('aria-expanded', 'true');
+  document.body.classList.add('no-scroll');
+}
+
+function closeMobileNavHandler() {
   mobNav.classList.remove('open');
   mobNav.setAttribute('aria-hidden', 'true');
   burger.setAttribute('aria-expanded', 'false');
+  document.body.classList.remove('no-scroll');
+}
+
+const closeMobileNav = () => {
+  closeMobileNavHandler();
 };
 
 mobClose.addEventListener('click', closeMobileNav);
 document.querySelectorAll('.mob-link').forEach((link) => {
   link.addEventListener('click', closeMobileNav);
 });
+
+// Replace previous burger behavior to use openMobileNav helper (avoid duplicate logic)
+if (burger) {
+  burger.removeEventListener && burger.removeEventListener('click', () => {});
+  burger.addEventListener('click', () => openMobileNav());
+}
+
+// Close on Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && mobNav.classList.contains('open')) {
+    closeMobileNavHandler();
+  }
+});
+
+// Close when tapping outside the menu content (click on overlay)
+if (mobNav) {
+  mobNav.addEventListener('click', (e) => {
+    if (e.target === mobNav) closeMobileNavHandler();
+  });
+}
 
 // ===== HERO HEADLINE =====
 window.addEventListener('load', () => {
