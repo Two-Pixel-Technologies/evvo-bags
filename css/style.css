@@ -2106,6 +2106,10 @@ ul {
     margin-bottom: 1.75rem;
   }
 
+  .hero-content{
+    padding-top: 6rem;
+  }
+
   .hero-pills {
     gap: 0.9rem;
     justify-content: center;
