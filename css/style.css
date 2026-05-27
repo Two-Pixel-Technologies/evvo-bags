@@ -489,6 +489,7 @@ ul {
   color: var(--everglade);
   opacity: 0.65;
   margin-bottom: 1.75rem;
+  margin-top: 0.5rem;
 }
 
 .hero-title {
