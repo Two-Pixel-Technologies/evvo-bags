@@ -2077,16 +2077,6 @@ ul {
     font-weight: 700;
   }
 
-  .mob-nav::before {
-    content: '';
-    position: absolute;
-    top: calc(1rem + env(safe-area-inset-top, 0px));
-    left: 1.5rem;
-    right: 1.5rem;
-    height: 1px;
-    background: rgba(18, 66, 48, 0.08);
-  }
-
   .hero {
     padding: calc(5rem + 0.5rem) max(1.5rem, 5vw) 2rem;
   }
@@ -2174,6 +2164,7 @@ ul {
 
   .why-feature {
     grid-template-columns: 2.5rem 1fr auto;
+    padding: clamp(1rem, 1.8vw, 1.3rem) max(0.75rem, 2vw);
   }
 
   .footer-grid {
@@ -2300,16 +2291,15 @@ ul {
 /* Stack product selector into a single column on small screens (tablet/phone) */
 @media (max-width: 768px) {
   .product-selector {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
-      "center"
-      "top"
-      "left"
-      "right"
-      "bottom";
+      "top top top"
+      "left center right"
+      "bottom bottom bottom";
     max-width: 100%;
     gap: 0.8rem;
     align-items: center;
+    justify-items: center;
   }
 
   .chip {
