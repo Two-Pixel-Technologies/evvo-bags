@@ -509,6 +509,51 @@ if (tipCards.length && tipsSection) {
   }
 }
 
+// ===== FAQ ACCORDION =====
+const faqAccordion = document.querySelector('[data-accordion]');
+if (faqAccordion) {
+  const faqItems = Array.from(faqAccordion.querySelectorAll('.faq-item'));
+
+  const setFaqState = (activeItem) => {
+    faqItems.forEach((item) => {
+      const trigger = item.querySelector('.faq-trigger');
+      const panel = item.querySelector('.faq-panel');
+      const isActive = activeItem === item;
+
+      item.classList.toggle('is-open', isActive);
+      trigger?.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+
+      if (!panel) return;
+      if (isActive) {
+        panel.hidden = false;
+        panel.style.maxHeight = `${panel.scrollHeight}px`;
+      } else {
+        panel.style.maxHeight = '0';
+        panel.hidden = true;
+      }
+    });
+  };
+
+  faqItems.forEach((item, index) => {
+    const trigger = item.querySelector('.faq-trigger');
+    const panel = item.querySelector('.faq-panel');
+    const isActive = item.classList.contains('is-open');
+
+    if (!trigger || !panel) return;
+    panel.hidden = !isActive;
+    panel.style.maxHeight = isActive ? `${panel.scrollHeight}px` : '0';
+    trigger.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+
+    trigger.addEventListener('click', () => {
+      if (item.classList.contains('is-open')) {
+        setFaqState(null);
+        return;
+      }
+      setFaqState(item);
+    });
+  });
+}
+
 // ===== CONTACT FORM =====
 const contactForm = document.getElementById('contactForm');
 
