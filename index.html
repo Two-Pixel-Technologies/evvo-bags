@@ -44,42 +44,77 @@
 
     <!-- ===== HERO ===== -->
     <section id="hero" class="hero">
-      <div class="hero-ambience" aria-hidden="true">
-        <span class="hero-blob hero-blob--blue"></span>
-        <span class="hero-blob hero-blob--pink"></span>
-        <span class="hero-blob hero-blob--gold"></span>
-      </div>
-
-      <div class="hero-float hero-float--left" aria-hidden="true">
-        <span class="hero-float-glow hero-float-glow--left"></span>
-        <div class="hero-float-inner">
-          <img src="images/products/pack-tall.png" alt="" width="400" height="600" loading="eager"/>
-        </div>
-      </div>
-      <div class="hero-float hero-float--right" aria-hidden="true">
-        <span class="hero-float-glow hero-float-glow--right"></span>
-        <div class="hero-float-inner">
-          <img src="images/products/pack-flat.png" alt="" width="400" height="300" loading="eager"/>
+      <div class="hero-panel hero-panel--green" aria-hidden="true">
+        <div class="hero-panel-deco">
+          <span class="hero-deco-ring hero-deco-ring--1"></span>
+          <span class="hero-deco-ring hero-deco-ring--2"></span>
+          <span class="hero-deco-ring hero-deco-ring--3"></span>
         </div>
       </div>
 
-      <div class="hero-inner">
-        <p class="hero-kicker">ESTD. 1990 • Bags that are made for evolved homes</p>
-        <h1 class="hero-title">
-          <span class="hero-line">BAGS MADE FOR</span>
-          <span class="hero-line">EVOLVING HOUSEHOLDS</span>
-        </h1>
-        <p class="hero-lead">Leak-proof, tear-resistant bags built for everyday household waste.</p>
-        <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary">Contact Us</a>
-          <a href="#products" class="btn btn-ghost">Explore Products</a>
+      <div class="hero-shell">
+        <div class="hero-copy">
+          <p class="hero-kicker">ESTD. 1990 • Bags that are made for evolved homes</p>
+          <h1 class="hero-title">
+            <span class="hero-line">BAGS MADE FOR</span>
+            <span class="hero-line">EVOLVING<br class="hero-br"/> HOUSEHOLDS</span>
+          </h1>
+          <p class="hero-lead">Leak-proof, tear-resistant bags built for everyday household waste.</p>
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-primary">Contact Us</a>
+            <a href="#products" class="btn btn-ghost hero-btn-ghost">Explore Products <span class="hero-btn-arrow" aria-hidden="true">→</span></a>
+          </div>
         </div>
-        <ul class="hero-pills" aria-label="Product features">
-          <li>Leak Proof</li>
-          <li>Heavy Duty</li>
-          <li>Machine Sealed</li>
-          <li>Bulk Supply</li>
-        </ul>
+
+        <div class="hero-stage">
+          <div class="hero-badge" aria-hidden="true">
+            <span class="hero-badge-num">35+</span>
+            <span class="hero-badge-label">Years of craft</span>
+          </div>
+          <figure class="hero-product">
+            <div class="hero-product-float">
+              <img src="images/products/pack-tall.png" alt="EVVO garbage bags packaging" width="400" height="600" loading="eager"/>
+            </div>
+          </figure>
+          <ul class="hero-features" aria-label="Product features">
+            <li class="hero-feature">
+              <span class="hero-feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M8 14c0-3 2-6 4-8 2 2 4 5 4 8v2H8v-2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M6 16h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </span>
+              <span class="hero-feature-content">
+                <span class="hero-feature-label">Leak Proof</span>
+                <span class="hero-feature-desc">No more leaks or mess.</span>
+              </span>
+            </li>
+            <li class="hero-feature">
+              <span class="hero-feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7l7-4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              </span>
+              <span class="hero-feature-content">
+                <span class="hero-feature-label">Heavy Duty</span>
+                <span class="hero-feature-desc">Built to handle everyday waste.</span>
+              </span>
+            </li>
+            <li class="hero-feature">
+              <span class="hero-feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="8" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 12h8M8 15h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </span>
+              <span class="hero-feature-content">
+                <span class="hero-feature-label">Machine Sealed</span>
+                <span class="hero-feature-desc">Consistent quality you can trust.</span>
+              </span>
+            </li>
+            <li class="hero-feature">
+              <span class="hero-feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="7" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="13" y="6" width="7" height="14" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+              </span>
+              <span class="hero-feature-content">
+                <span class="hero-feature-label">Bulk Supply</span>
+                <span class="hero-feature-desc">Perfect for homes &amp; businesses.</span>
+              </span>
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -94,26 +129,47 @@
     <section id="about" class="section about">
       <div class="container about-grid">
         <div class="about-media reveal">
-          <div class="about-shape" aria-hidden="true"></div>
-          <div class="about-frame">
-            <div class="about-img-wrap">
-              <span class="about-estd">ESTD. 1990</span>
-              <img src="images/products/boxes-duo.png" alt="EVVO BAGS packaging — medium and large formats" loading="lazy" width="800" height="600"/>
+          <div class="about-visual">
+            <div class="about-visual-panel" aria-hidden="true"></div>
+            <div class="about-visual-frame">
+              <figure class="about-product">
+                <img src="images/products/boxes-duo.png" alt="EVVO BAGS packaging — medium and large formats" loading="lazy" width="800" height="600"/>
+              </figure>
             </div>
-            <div class="about-badge">
+            <aside class="about-badge" aria-hidden="true">
               <span class="about-badge-num">35+</span>
-              <span class="about-badge-label">Years of craft</span>
-            </div>
+              <span class="about-badge-label">Years of expertise</span>
+            </aside>
           </div>
         </div>
         <div class="about-copy reveal reveal-delay-1">
           <p class="eyebrow">About EVVO</p>
-          <h2 class="display-title display-title-lg about-title">Everyday Essentials, <em class="about-title-em">Elevated.</em></h2>
-          <p class="about-accent">Crafted for homes that expect more from the ordinary.</p>
-          <div class="about-body">
-            <p class="body-text">EVVO BAGS brings three decades of packaging expertise from Packing Solutions Jaipur into the home — where reliability matters most.</p>
-            <p class="body-text">Born from industrial standards and refined for modern households, every bag stays strong under weight, resists tears, and seals out leaks.</p>
+          <h2 class="about-title">
+            <span class="about-title-line">Everyday Essentials,</span>
+            <em class="about-title-em">Elevated.</em>
+          </h2>
+          <span class="about-rule" aria-hidden="true"></span>
+          <div class="about-features">
+            <article class="about-feature">
+              <span class="about-feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="7.25" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </span>
+              <p class="about-feature-text">Three decades <br> of packaging expertise</p>
+            </article>
+            <article class="about-feature">
+              <span class="about-feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7l7-4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              </span>
+              <p class="about-feature-text">Built for strength, designed for everyday use</p>
+            </article>
+            <article class="about-feature">
+              <span class="about-feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5c-2.75 2.75-5.5 6.25-5.5 9.5 0 3.5 2.8 6.5 6.5 6.5s6.5-3 6.5-6.5c0-3.25-2.75-6.75-5.5-9.5z" stroke="currentColor" stroke-width="1.5"/><path d="M9.5 12.5l1.75 1.75 3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <p class="about-feature-text">Reliable, durable and leak <br> resistant</p>
+            </article>
           </div>
+          <p class="about-description">EVVO BAGS brings three decades of packaging expertise from Packing Solutions Jaipur into the home — where reliability matters most.</p>
           <a href="#why-evvo" class="text-link">Discover why EVVO →</a>
         </div>
       </div>
@@ -125,61 +181,82 @@
         <span class="why-bg-word why-bg-word--1">STRONG</span>
         <span class="why-bg-word why-bg-word--2">DURABLE</span>
         <span class="why-bg-word why-bg-word--3">EVOLVED</span>
+        
       </div>
-      <div class="container why-layout">
-        <div class="why-intro reveal">
-          <div class="why-intro-main">
-            <p class="eyebrow">Why EVVO</p>
-            <h2 class="display-title display-title-lg">Not All Garbage Bags Are Built The Same.</h2>
-            <p class="body-text why-lead">Strength, seal integrity, and consistency — engineered into every pack.</p>
+      <div class="container">
+        <header class="why-header reveal">
+          <p class="eyebrow">Why EVVO</p>
+          <h2 class="display-title display-title-lg">Not All Garbage Bags Are Built The Same.</h2>
+          <p class="body-text why-lead">Strength, seal integrity, and consistency engineered into every pack.</p>
+          
+        </header>
+
+        <div class="why-wheel-stage reveal">
+          <article class="why-pillar why-pillar--tl" data-pillar="0">
+            <span class="why-pillar-num">01</span>
+            <h3>35+ Years of Expertise</h3>
+            <p>Backed by decades of packaging knowledge and reliable manufacturing standards.</p>
+          </article>
+          <article class="why-pillar why-pillar--tr" data-pillar="1">
+            <span class="why-pillar-num">02</span>
+            <h3>Unmatched Strength</h3>
+            <p>Built to resist tearing, stretching, and everyday pressure.</p>
+          </article>
+          <article class="why-pillar why-pillar--bl" data-pillar="2">
+            <span class="why-pillar-num">03</span>
+            <h3>Leak-Proof Protection</h3>
+            <p>Machine-sealed edges help reduce leaks, spills, and daily mess.</p>
+          </article>
+          <article class="why-pillar why-pillar--br" data-pillar="3">
+            <span class="why-pillar-num">04</span>
+            <h3>Consistent Quality</h3>
+            <p>Reliable production ensures every pack performs the way it should.</p>
+          </article>
+
+          <div class="why-wheel-wrap">
+            <div class="why-wheel" id="whyWheel">
+              <div class="why-wheel-disc" id="whyWheelDisc" style="--wheel-turn: 0deg">
+                <button type="button" class="why-slice why-slice--tl is-active" data-pillar="0" aria-label="35+ Years of Expertise" aria-pressed="true">
+                  <span class="why-slice-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M4 18h16M6 14h12M8 10h8M10 6h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </span>
+                </button>
+                <button type="button" class="why-slice why-slice--tr" data-pillar="1" aria-label="Unmatched Strength" aria-pressed="false">
+                  <span class="why-slice-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7l7-4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+                  </span>
+                </button>
+                <button type="button" class="why-slice why-slice--bl" data-pillar="2" aria-label="Leak-Proof Protection" aria-pressed="false">
+                  <span class="why-slice-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M8 14c0-3 2-6 4-8 2 2 4 5 4 8v2H8v-2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M6 16h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </span>
+                </button>
+                <button type="button" class="why-slice why-slice--br" data-pillar="3" aria-label="Consistent Quality" aria-pressed="false">
+                  <span class="why-slice-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M8 12l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </button>
+              </div>
+              <div class="why-wheel-hub" aria-hidden="true">
+                <span>EVVO<br/>BAGS</span>
+              </div>
+            </div>
+
+            <div class="why-wheel-nav">
+              <button type="button" class="why-wheel-btn" id="whyPrev" aria-label="Previous pillar">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button type="button" class="why-wheel-btn" id="whyNext" aria-label="Next pillar">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
           </div>
-          <ul class="why-trust" aria-label="EVVO highlights">
-            <li><strong>35+</strong> Years of manufacturing</li>
-            <li><strong>4</strong> Core performance pillars</li>
-            <li><strong>100%</strong> Machine-sealed bottoms</li>
-          </ul>
-        </div>
-        <div class="why-features">
-          <article class="why-feature reveal" style="--accent: var(--pale-blue)">
-            <span class="why-feature-num">01</span>
-            <div class="why-feature-body">
-              <h3>35+ Years of Expertise</h3>
-              <p>Backed by decades of packaging knowledge and reliable manufacturing standards.</p>
-            </div>
-            <span class="why-feature-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M4 18h16M6 14h12M8 10h8M10 6h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </span>
-          </article>
-          <article class="why-feature reveal reveal-delay-1" style="--accent: var(--golden-glow)">
-            <span class="why-feature-num">02</span>
-            <div class="why-feature-body">
-              <h3>Unmatched Strength</h3>
-              <p>Built to resist tearing, stretching, and everyday pressure.</p>
-            </div>
-            <span class="why-feature-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7l7-4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-            </span>
-          </article>
-          <article class="why-feature reveal reveal-delay-2" style="--accent: var(--mimi-pink)">
-            <span class="why-feature-num">03</span>
-            <div class="why-feature-body">
-              <h3>Leak-Proof Protection</h3>
-              <p>Machine-sealed edges help reduce leaks, spills, and daily mess.</p>
-            </div>
-            <span class="why-feature-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M8 14c0-3 2-6 4-8 2 2 4 5 4 8v2H8v-2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M6 16h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </span>
-          </article>
-          <article class="why-feature reveal reveal-delay-3" style="--accent: var(--greenish-beige)">
-            <span class="why-feature-num">04</span>
-            <div class="why-feature-body">
-              <h3>Consistent Quality</h3>
-              <p>Reliable production ensures every pack performs the way it should.</p>
-            </div>
-            <span class="why-feature-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M8 12l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </article>
+
+          <div class="why-detail" id="whyDetail" data-pillar="0" style="--accent: var(--pale-blue)">
+            <span class="why-detail-num">01</span>
+            <h3 class="why-detail-title">35+ Years of Expertise</h3>
+            <p class="why-detail-desc">Backed by decades of packaging knowledge and reliable manufacturing standards.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -193,42 +270,126 @@
         </header>
 
         <div class="products-stage reveal">
-          <div class="products-experience">
-            <div class="products-visual-zone">
-              <div class="product-showcase">
-                <div class="product-showcase-plate" aria-hidden="true"></div>
-                <div class="product-showcase-glow" aria-hidden="true"></div>
-                <span class="product-showcase-badge">EVVO</span>
-                <div class="products-ambience" aria-hidden="true"></div>
-                <div class="product-selector" role="tablist" aria-label="Product sizes">
-                <button type="button" class="chip chip-pos-top" role="tab" aria-selected="false" data-product="large">Large</button>
-                <button type="button" class="chip chip-pos-left" role="tab" aria-selected="false" data-product="small">Small</button>
-                <div class="products-visual">
+          <div class="showroom">
+            <div class="showroom-visual">
+              <div class="showroom-orbit" aria-hidden="true">
+                <span class="showroom-orbit-ring showroom-orbit-ring--1"></span>
+                <span class="showroom-orbit-ring showroom-orbit-ring--2"></span>
+                <span class="showroom-orbit-ring showroom-orbit-ring--3"></span>
+              </div>
+              <div class="showroom-stage">
+                <ul class="showroom-callouts" id="productCallouts" aria-label="Product highlights"></ul>
+                <figure class="showroom-product">
                   <img id="productImage" src="images/products/pack-tall.png" alt="EVVO Medium garbage bags" width="400" height="500"/>
-                </div>
-                <button type="button" class="chip chip-pos-right is-active" role="tab" aria-selected="true" data-product="medium">Medium</button>
-                <button type="button" class="chip chip-pos-bottom" role="tab" aria-selected="false" data-product="bulk">Bulk / Custom</button>
+                </figure>
+                <div class="showroom-pedestal" aria-hidden="true">
+                  <span class="showroom-pedestal-glow"></span>
+                  <span class="showroom-pedestal-ring"></span>
+                  <span class="showroom-pedestal-disc"></span>
                 </div>
               </div>
             </div>
 
-            <div class="products-panel">
-              <div class="product-info" role="tabpanel">
-                <h3 id="productTitle" class="product-title">Medium Garbage Bags</h3>
-                <p id="productDesc" class="product-desc">Our best-selling format for kitchen and bathroom bins — balanced capacity with everyday strength.</p>
-                <dl class="product-meta">
-                  <div>
-                    <dt>Size</dt>
-                    <dd id="productSize">19 in × 20 in</dd>
+            <div class="showroom-panel">
+              <div class="showroom-accordion" id="productAccordion" role="tablist" aria-label="Product sizes">
+                <article class="showroom-item" data-product="small">
+                  <button type="button" class="showroom-trigger" role="tab" aria-selected="false" aria-expanded="false">
+                    <span class="showroom-trigger-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none"><rect x="8" y="9" width="8" height="11" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                    </span>
+                    <span class="showroom-trigger-copy">
+                      <span class="showroom-trigger-name">Small</span>
+                      <span class="showroom-trigger-spec" data-field="spec">14 in × 16 in · 40 bags per pack</span>
+                    </span>
+                    <span class="showroom-trigger-toggle" aria-hidden="true">+</span>
+                  </button>
+                  <div class="showroom-body">
+                    <div class="showroom-body-inner">
+                      <p class="showroom-desc" data-field="desc"></p>
+                     
+                      <ul class="showroom-features" data-field="features" aria-label="Features"></ul>
+                    </div>
                   </div>
-                  <div>
-                    <dt>Ideal for</dt>
-                    <dd id="productUse">Kitchen &amp; bathroom bins</dd>
+                </article>
+                <article class="showroom-item is-active" data-product="medium">
+                  <button type="button" class="showroom-trigger" role="tab" aria-selected="true" aria-expanded="true">
+                    <span class="showroom-trigger-icon showroom-trigger-icon--accent" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none"><path d="M8 4h8l1 4H7l1-4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M6 8h12v10a2 2 0 01-2 2H8a2 2 0 01-2-2V8z" stroke="currentColor" stroke-width="1.5"/><path d="M10 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </span>
+                    <span class="showroom-trigger-copy">
+                      <span class="showroom-trigger-name">Medium</span>
+                      <span class="showroom-trigger-spec" data-field="spec">19 in × 20 in · 30 bags per pack</span>
+                    </span>
+                    <span class="showroom-trigger-toggle" aria-hidden="true">−</span>
+                  </button>
+                  <div class="showroom-body">
+                    <div class="showroom-body-inner">
+                      <p class="showroom-desc" data-field="desc"></p>
+                      
+                      <ul class="showroom-features" data-field="features" aria-label="Features"></ul>
+                    </div>
                   </div>
-                </dl>
-                <ul id="productTags" class="feature-chips" aria-label="Features"></ul>
-                <a href="#contact" class="btn btn-primary product-cta">Enquire</a>
+                </article>
+                <article class="showroom-item" data-product="large">
+                  <button type="button" class="showroom-trigger" role="tab" aria-selected="false" aria-expanded="false">
+                    <span class="showroom-trigger-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none"><path d="M5 7h14l-2 14H7L5 7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 7V5a4 4 0 018 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </span>
+                    <span class="showroom-trigger-copy">
+                      <span class="showroom-trigger-name">Large</span>
+                      <span class="showroom-trigger-spec" data-field="spec">24 in × 32 in · 15 bags per pack</span>
+                    </span>
+                    <span class="showroom-trigger-toggle" aria-hidden="true">+</span>
+                  </button>
+                  <div class="showroom-body">
+                    <div class="showroom-body-inner">
+                      <p class="showroom-desc" data-field="desc"></p>
+                      
+                      <ul class="showroom-features" data-field="features" aria-label="Features"></ul>
+                    </div>
+                  </div>
+                </article>
+                <article class="showroom-item" data-product="extra-large">
+                  <button type="button" class="showroom-trigger" role="tab" aria-selected="false" aria-expanded="false">
+                    <span class="showroom-trigger-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16l-2.5 15H6.5L4 6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7 6V4a5 5 0 0110 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </span>
+                    <span class="showroom-trigger-copy">
+                      <span class="showroom-trigger-name">Extra Large</span>
+                      <span class="showroom-trigger-spec" data-field="spec">28 in × 36 in · 10 bags per pack</span>
+                    </span>
+                    <span class="showroom-trigger-toggle" aria-hidden="true">+</span>
+                  </button>
+                  <div class="showroom-body">
+                    <div class="showroom-body-inner">
+                      <p class="showroom-desc" data-field="desc"></p>
+                      
+                      <ul class="showroom-features" data-field="features" aria-label="Features"></ul>
+                    </div>
+                  </div>
+                </article>
+                <article class="showroom-item" data-product="jumbo">
+                  <button type="button" class="showroom-trigger" role="tab" aria-selected="false" aria-expanded="false">
+                    <span class="showroom-trigger-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="8" width="8" height="13" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="13" y="4" width="8" height="17" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+                    </span>
+                    <span class="showroom-trigger-copy">
+                      <span class="showroom-trigger-name">Jumbo</span>
+                      <span class="showroom-trigger-spec" data-field="spec">32 in × 40 in · 8 bags per pack</span>
+                    </span>
+                    <span class="showroom-trigger-toggle" aria-hidden="true">+</span>
+                  </button>
+                  <div class="showroom-body">
+                    <div class="showroom-body-inner">
+                      <p class="showroom-desc" data-field="desc"></p>
+                      <dl class="showroom-specs">
+                        
+                      <ul class="showroom-features" data-field="features" aria-label="Features"></ul>
+                    </div>
+                  </div>
+                </article>
               </div>
+              <a href="#contact" class="btn btn-primary btn-full showroom-cta">Enquire</a>
             </div>
           </div>
         </div>
@@ -244,14 +405,15 @@
         <span class="tips-deco-line tips-deco-line--1"></span>
         <span class="tips-deco-line tips-deco-line--2"></span>
         <span class="tips-deco-grid"></span>
-        <span class="tips-deco-word tips-deco-word--a">HABITS</span>
-        <span class="tips-deco-word tips-deco-word--b">CLEAN</span>
       </div>
       <div class="tips-bg-words" aria-hidden="true">
-        <span>CLEAN</span>
-        <span>FRESH</span>
-        <span>EVERYDAY</span>
-        <span>SIMPLE</span>
+        <span class="tips-deco-word tips-deco-word--1">CLEAN</span>
+        <span class="tips-deco-word tips-deco-word--2">FRESH</span>
+        <span class="tips-deco-word tips-deco-word--3">EVERYDAY</span>
+        <span class="tips-deco-word tips-deco-word--4">SIMPLE</span>
+        <span class="tips-deco-word tips-deco-word--5">DURABLE</span>
+        <span class="tips-deco-word tips-deco-word--6">HYGIENIC</span>
+        <span class="tips-deco-word tips-deco-word--7">LEAK-PROOF</span>
       </div>
       <div class="container tips-container">
         <div class="tips-scroll" id="tipsScroll" style="--tip-count: 4">
@@ -373,47 +535,82 @@
     <!-- ===== CONTACT ===== -->
     <section id="contact" class="section contact">
       <div class="contact-bg-word" aria-hidden="true">EVVOBAGS</div>
+      <div class="contact-orbit" aria-hidden="true">
+        <span class="contact-orbit-ring"></span>
+      </div>
       <div class="container contact-grid">
         <div class="contact-copy reveal">
           <p class="eyebrow eyebrow-light">Contact</p>
           <h2 class="display-title display-title-light display-title-lg">Looking For Reliable Garbage Bags?</h2>
           <p class="body-text body-text-light">Tell us what you need — household packs, bulk orders, or custom sizes. We respond with clear guidance and dependable supply.</p>
+          <div class="contact-stats-pill">
+            <ul class="contact-stats" aria-label="Contact highlights">
+              <li>
+                <strong>24h</strong>
+                <span>Quick Reply</span>
+              </li>
+              <li>
+                <strong>1000+</strong>
+                <span>Happy Clients</span>
+              </li>
+              <li>
+                <strong>Bulk</strong>
+                <span>Custom Solutions</span>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div class="contact-form-wrap reveal reveal-delay-1">
-          <form class="contact-form" id="contactForm" novalidate>
-            <label>
-              <span>Name</span>
-              <input type="text" name="name" required autocomplete="name" placeholder="Your name"/>
-            </label>
-            <label>
-              <span>Email</span>
-              <input type="email" name="email" required autocomplete="email" placeholder="you@email.com"/>
-            </label>
-            <label>
-              <span>Phone</span>
-              <input type="tel" name="phone" autocomplete="tel" placeholder="+91"/>
-            </label>
-            <label>
-              <span>Message</span>
-              <textarea name="message" rows="3" required placeholder="What are you looking for?"></textarea>
-            </label>
-            <button type="submit" class="btn btn-primary btn-full">Send Enquiry</button>
-          </form>
+        <div class="contact-card reveal reveal-delay-1">
+          <span class="contact-form-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <div class="contact-form-wrap">
+            <div class="contact-form-header">
+              <h3>Send us an enquiry</h3>
+              <p>We’ll get back to you shortly</p>
+            </div>
+            <form class="contact-form" id="contactForm" novalidate>
+              <div class="contact-form-row">
+                <label>
+                  <span>Name</span>
+                  <input type="text" name="name" required autocomplete="name" placeholder="Your name"/>
+                </label>
+                <label>
+                <span>Phone</span>
+                <input type="tel" name="phone" autocomplete="tel" placeholder="+91"/>
+              </label>
+                
+              </div>
+              <label>
+                  <span>Email</span>
+                  <input type="email" name="email" required autocomplete="email" placeholder="you@email.com"/>
+                </label>
+              
+              <label>
+                <span>Message</span>
+                <textarea name="message" rows="4" required placeholder="What are you looking for?"></textarea>
+              </label>
+              <button type="submit" class="btn btn-primary btn-full contact-submit">Send Enquiry</button>
+            </form>
 
-          <div class="contact-icons" aria-label="Contact channels">
-            <a href="https://wa.me/919784121989" class="contact-icon contact-icon--whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.884 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            </a>
-            <a href="mailto:packingsolutionsjpr@gmail.com" class="contact-icon" aria-label="Email">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.75"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-            <a href="https://instagram.com/packingsolutionsjpr" class="contact-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.75"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.75"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
-            </a>
-            <a href="tel:+919784121989" class="contact-icon" aria-label="Call">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
+            <div class="contact-icons" aria-label="Contact channels">
+              <p class="contact-icons-label">Or connect with us</p>
+              <div class="contact-icons-row">
+                <a href="https://wa.me/919784121989" class="contact-icon contact-icon--whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.884 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                </a>
+                <a href="mailto:packingsolutionsjpr@gmail.com" class="contact-icon" aria-label="Email">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.75"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a href="https://instagram.com/packingsolutionsjpr" class="contact-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.75"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.75"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+                </a>
+                <a href="tel:+919784121989" class="contact-icon" aria-label="Call">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -440,7 +637,8 @@
         <a href="#products">Small</a>
         <a href="#products">Medium</a>
         <a href="#products">Large</a>
-        <a href="#products">Bulk / Custom</a>
+        <a href="#products">Extra Large</a>
+        <a href="#products">Jumbo</a>
       </nav>
       <div class="footer-col">
         <h4>Contact</h4>
