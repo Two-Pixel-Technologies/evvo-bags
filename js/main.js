@@ -389,12 +389,17 @@ function updateWhyDetail(data) {
   setTimeout(applyContent, 180);
 }
 
+let wheelRotationAngle = 0;
+let isFirstWhyRender = true;
+
 function setWhyPillar(targetIndex, isRelative = false) {
+  let diff = 0;
   if (isRelative) {
+    diff = targetIndex - cumulativePillarIndex;
     cumulativePillarIndex = targetIndex;
   } else {
     const currentPillar = ((cumulativePillarIndex % 4) + 4) % 4;
-    let diff = targetIndex - currentPillar;
+    diff = targetIndex - currentPillar;
     if (diff > 2) diff -= 4;
     if (diff < -2) diff += 4;
     cumulativePillarIndex += diff;
@@ -402,10 +407,14 @@ function setWhyPillar(targetIndex, isRelative = false) {
 
   activePillar = ((cumulativePillarIndex % 4) + 4) % 4;
   const data = WHY_PILLARS[activePillar];
-  const rotationDegrees = -360 * cumulativePillarIndex;
+
+  if (!isFirstWhyRender && diff !== 0) {
+    wheelRotationAngle += -360 * diff;
+  }
+  isFirstWhyRender = false;
 
   if (whyWheelDisc) {
-    whyWheelDisc.style.setProperty('--wheel-turn', `${rotationDegrees}deg`);
+    whyWheelDisc.style.setProperty('--wheel-turn', `${wheelRotationAngle}deg`);
   }
 
   whySlices.forEach((slice) => {

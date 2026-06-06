@@ -1061,12 +1061,15 @@ ul {
   border-radius: 50%;
   overflow: hidden;
   transform: rotate(var(--wheel-turn, 0deg));
-  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  /* Elegant deceleration curve for a luxury feel */
+  transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
   box-shadow:
     0 0 0 8px rgba(255,255,255,0.75),
     0 18px 45px rgba(18,66,48,0.12),
     inset 0 0 0 6px rgba(255,255,255,0.4);
 }
+
+
 
 .why-slice {
   position: relative;
@@ -1074,10 +1077,11 @@ ul {
   place-items: center;
   padding: 0.55rem 0.35rem;
   border-radius: 0;
-  border: 2px solid transparent;
+  /* No border — active state uses box-shadow outline to avoid disc overflow clipping */
+  border: none;
   cursor: pointer;
   color: var(--everglade);
-  transition: filter 0.4s var(--ease), opacity 0.4s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease), background 0.35s var(--ease);
+  transition: filter 0.4s var(--ease), opacity 0.4s var(--ease), box-shadow 0.35s var(--ease), background 0.35s var(--ease);
 }
 
 .why-slice:focus-visible {
@@ -1090,22 +1094,25 @@ ul {
   box-shadow: 0 0 0 3px rgba(18, 66, 48, 0.15);
 }
 
-.why-slice--tl { background: color-mix(in srgb, var(--pale-blue) 70%, #ffffff); }
-.why-slice--tr { background: color-mix(in srgb, var(--golden-glow) 72%, #ffffff); }
-.why-slice--bl { background: color-mix(in srgb, var(--mimi-pink) 72%, #ffffff); }
-.why-slice--br { background: color-mix(in srgb, var(--greenish-beige) 74%, #ffffff); }
+.why-slice--tl { background: color-mix(in srgb, var(--pale-blue) 70%, #ffffff); border-top-left-radius: 100%; }
+.why-slice--tr { background: color-mix(in srgb, var(--golden-glow) 72%, #ffffff); border-top-right-radius: 100%; }
+.why-slice--bl { background: color-mix(in srgb, var(--mimi-pink) 72%, #ffffff); border-bottom-left-radius: 100%; }
+.why-slice--br { background: color-mix(in srgb, var(--greenish-beige) 74%, #ffffff); border-bottom-right-radius: 100%; }
 
 .why-slice:hover {
   filter: brightness(1.05) saturate(1.04);
   z-index: 1;
 }
 
+/* Active slice: white fill + everglade inset shadow ring (not clipped by overflow:hidden) */
 .why-slice.is-active {
   filter: brightness(1.08) saturate(1.08);
   z-index: 1;
   background: #ffffff !important;
-  border-color: var(--everglade) !important;
-  box-shadow: 0 18px 40px rgba(18, 66, 48, 0.2);
+  /* Inset shadow acts as a visible border — not clipped by parent overflow:hidden */
+  box-shadow:
+    inset 0 0 0 2.5px var(--everglade),
+    0 18px 40px rgba(18, 66, 48, 0.18);
   opacity: 1;
 }
 
@@ -1123,7 +1130,8 @@ ul {
   width: 100%;
   height: 100%;
   transform: rotate(calc(-1 * var(--wheel-turn, 0deg)));
-  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  /* Match disc rotation duration */
+  transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .why-slice-icon {
@@ -1169,7 +1177,8 @@ ul {
 
 .why-wheel-hub {
   position: absolute;
-  inset: 27%;
+  /* Slightly smaller hub (32% inset instead of 27%) — gives slices more visual space */
+  inset: 32%;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -1179,13 +1188,15 @@ ul {
     0 0 0 1px rgba(18, 66, 48, 0.04);
   z-index: 3;
   pointer-events: none;
+  overflow: hidden;
 }
 
-.why-wheel-hub span {
-  font-size: clamp(1.15rem, 2vw, 1.6rem);
-  letter-spacing: 0.08em;
-  font-weight: 700;
-  font-family: var(--font-display);
+/* Hub logo image */
+.why-wheel-hub img {
+  width: 72%;
+  height: auto;
+  object-fit: contain;
+  display: block;
 }
 
 .why-pillar {
@@ -3102,7 +3113,9 @@ showroom-orbit-ring--2::before,
 }
 
 @media (max-width: 768px) {
+  /* Reduce mobile navbar height */
   .nav {
+    height: 3.75rem;
     background: rgba(247, 241, 228, 0.94);
     backdrop-filter: blur(16px) saturate(1.08);
     -webkit-backdrop-filter: blur(16px) saturate(1.08);
@@ -3111,6 +3124,11 @@ showroom-orbit-ring--2::before,
 
   .nav-links {
     display: none;
+  }
+
+  .nav-logo img {
+    height: 2.4rem;
+    width: auto;
   }
 
   .burger {
@@ -3273,8 +3291,7 @@ showroom-orbit-ring--2::before,
 
   /* ===== MOBILE HERO — diagonal split (linen top / everglade bottom) ===== */
   .hero {
-    min-height: 100dvh;
-    min-height: 100svh;
+    min-height: auto;
     /* Diagonal split: linen top ~58%, everglade bottom ~42% */
     background:
       linear-gradient(
@@ -3310,11 +3327,11 @@ showroom-orbit-ring--2::before,
   /* Full-height single column – content stacked top to bottom */
   .hero-shell {
     grid-template-columns: 1fr;
-    min-height: 100svh;
+    min-height: auto;
     padding:
-      calc(5rem + env(safe-area-inset-top, 0px))
+      calc(5.5rem + env(safe-area-inset-top, 0px))
       max(1.5rem, 5vw)
-      clamp(2rem, 5vw, 3rem);
+      1.15rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -3342,20 +3359,26 @@ showroom-orbit-ring--2::before,
     opacity: 0.9;
     /* Sits on linen bg — use everglade for contrast */
     color: var(--everglade);
-    margin: 0 0 0.75rem;
+    /* Extra breathing room below navbar */
+    margin: 0.5rem 0 0.75rem;
     white-space: nowrap;
   }
 
   .hero-title {
-    font-size: clamp(2.5rem, 10vw, 3.75rem);
-    line-height: 1.02;
+    /* Slightly smaller to prevent 3-line wrapping on most mobiles */
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+    line-height: 1.05;
     /* Dark title on light background */
     color: var(--gunmetal);
     margin: 0 0 0.85rem;
   }
 
+  .hero-line {
+    display: block;
+  }
+
   .hero-br {
-    display: inline;
+    display: none;
   }
 
   .hero-lead {
