@@ -307,6 +307,7 @@ setProduct('medium');
 
 // ===== WHY EVVO WHEEL =====
 const whyWheelDisc = document.getElementById('whyWheelDisc');
+const whyWheel = document.getElementById('whyWheel');
 const whySlices = document.querySelectorAll('.why-slice');
 const whyPillars = document.querySelectorAll('.why-pillar[data-pillar]');
 const whyDetail = document.getElementById('whyDetail');
@@ -345,7 +346,27 @@ const WHY_PILLARS = [
 ];
 
 let activePillar = 0;
+let cumulativePillarIndex = 0;
+let whyRotationTimer = null;
+let hasInteractedManually = false;
 const prefersReducedMotionWhy = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function startWhyAutoRotate() {
+  if (prefersReducedMotionWhy || whyRotationTimer || hasInteractedManually) return;
+  whyRotationTimer = window.setInterval(() => {
+    setWhyPillar(cumulativePillarIndex + 1, true);
+  }, 5000);
+}
+
+function stopWhyAutoRotate(isManual = false) {
+  if (isManual) {
+    hasInteractedManually = true;
+  }
+  if (whyRotationTimer) {
+    window.clearInterval(whyRotationTimer);
+    whyRotationTimer = null;
+  }
+}
 
 function updateWhyDetail(data) {
   if (!whyDetail) return;
@@ -368,12 +389,23 @@ function updateWhyDetail(data) {
   setTimeout(applyContent, 180);
 }
 
-function setWhyPillar(index) {
-  activePillar = (index + WHY_PILLARS.length) % WHY_PILLARS.length;
+function setWhyPillar(targetIndex, isRelative = false) {
+  if (isRelative) {
+    cumulativePillarIndex = targetIndex;
+  } else {
+    const currentPillar = ((cumulativePillarIndex % 4) + 4) % 4;
+    let diff = targetIndex - currentPillar;
+    if (diff > 2) diff -= 4;
+    if (diff < -2) diff += 4;
+    cumulativePillarIndex += diff;
+  }
+
+  activePillar = ((cumulativePillarIndex % 4) + 4) % 4;
   const data = WHY_PILLARS[activePillar];
+  const rotationDegrees = -360 * cumulativePillarIndex;
 
   if (whyWheelDisc) {
-    whyWheelDisc.style.setProperty('--wheel-turn', data.turn);
+    whyWheelDisc.style.setProperty('--wheel-turn', `${rotationDegrees}deg`);
   }
 
   whySlices.forEach((slice) => {
@@ -390,7 +422,12 @@ function setWhyPillar(index) {
 }
 
 whySlices.forEach((slice) => {
-  slice.addEventListener('click', () => setWhyPillar(Number(slice.dataset.pillar)));
+  slice.addEventListener('click', () => {
+    stopWhyAutoRotate(true);
+    setWhyPillar(Number(slice.dataset.pillar));
+  });
+  slice.addEventListener('focus', () => stopWhyAutoRotate(false));
+  slice.addEventListener('blur', () => startWhyAutoRotate());
   slice.addEventListener('mouseenter', () => {
     const idx = Number(slice.dataset.pillar);
     whyPillars.forEach((pillar) => {
@@ -399,34 +436,63 @@ whySlices.forEach((slice) => {
   });
 });
 
-document.getElementById('whyWheel')?.addEventListener('mouseleave', () => {
+whyWheel?.addEventListener('mouseenter', () => {
+  stopWhyAutoRotate(false);
+});
+whyWheel?.addEventListener('mouseleave', () => {
   whyPillars.forEach((pillar) => pillar.classList.remove('is-hovered'));
+  startWhyAutoRotate();
 });
 
-whyPrev?.addEventListener('click', () => setWhyPillar(activePillar - 1));
-whyNext?.addEventListener('click', () => setWhyPillar(activePillar + 1));
+whyPrev?.addEventListener('click', () => {
+  stopWhyAutoRotate(true);
+  setWhyPillar(cumulativePillarIndex - 1, true);
+});
+whyNext?.addEventListener('click', () => {
+  stopWhyAutoRotate(true);
+  setWhyPillar(cumulativePillarIndex + 1, true);
+});
 
 whyPillars.forEach((pillar) => {
-  pillar.addEventListener('click', () => setWhyPillar(Number(pillar.dataset.pillar)));
+  pillar.addEventListener('click', () => {
+    stopWhyAutoRotate(true);
+    setWhyPillar(Number(pillar.dataset.pillar));
+  });
 });
 
 setWhyPillar(0);
+startWhyAutoRotate();
 
 // ===== TIPS STICKY SCROLL STACK =====
 const tipsSection = document.getElementById('tips');
 const tipsScroll = document.getElementById('tipsScroll');
 const tipCards = document.querySelectorAll('#tipsStack .tip-card');
 
+// How many px of the card's top peeks above the active card per past-card layer
+const TIPS_PEEK_PX = 50;
+
 function setTipsStackState(activeIndex) {
   tipCards.forEach((card, i) => {
     card.classList.remove('is-active', 'is-past', 'is-next');
+
     if (i === activeIndex) {
+      // Active card: full view, no offset
       card.classList.add('is-active');
+      card.style.removeProperty('--depth');
+      card.style.removeProperty('--peek-offset');
     } else if (i < activeIndex) {
+      // Past card: peek its top above the active card
+      const depth = activeIndex - i;
       card.classList.add('is-past');
-      card.style.setProperty('--depth', String(activeIndex - i));
+      card.style.setProperty('--depth', String(depth));
+      // Negative offset moves the card upward so its top peeks above active card.
+      // Each layer of depth adds another PEEK_PX gap.
+      card.style.setProperty('--peek-offset', `${-depth * TIPS_PEEK_PX}px`);
     } else {
+      // Future card: hidden below
       card.classList.add('is-next');
+      card.style.removeProperty('--depth');
+      card.style.removeProperty('--peek-offset');
     }
   });
 }
@@ -437,14 +503,11 @@ function updateTipsScrollHeight() {
     return;
   }
 
-  const pin = tipsScroll.querySelector('.tips-pin');
-  if (!pin) return;
-
-  const pinHeight = pin.offsetHeight;
-  const step = Math.max(220, Math.min(window.innerHeight * 0.28, 340));
-  const runway = pinHeight + step * (tipCards.length - 1);
-  tipsScroll.style.height = `${runway + window.innerHeight - pinHeight}px`;
-  tipsScroll.style.setProperty('--tip-step', `${step}px`);
+  // Each card transition gets ~60% of the viewport as scroll runway
+  const stepPerCard = Math.max(320, Math.min(window.innerHeight * 0.60, 560));
+  // Total scroll container height: 1 viewport (to pin the section) + steps for each card switch
+  const totalHeight = window.innerHeight + stepPerCard * (tipCards.length - 1);
+  tipsScroll.style.height = `${totalHeight}px`;
 }
 
 function updateTipsStack() {
@@ -452,6 +515,7 @@ function updateTipsStack() {
 
   const rect = tipsScroll.getBoundingClientRect();
   const viewport = window.innerHeight;
+  // How many px we can scroll within tipsScroll while pinned
   const scrollRun = tipsScroll.offsetHeight - viewport;
 
   if (scrollRun <= 0) {
@@ -459,15 +523,17 @@ function updateTipsStack() {
     return;
   }
 
+  // How far we've scrolled through the pinned zone (0 → scrollRun)
   const scrolled = Math.min(Math.max(-rect.top, 0), scrollRun);
-  const segments = Math.max(tipCards.length - 1, 1);
-  const segmentSize = scrollRun / segments;
-  const index = Math.min(
-    Math.floor(scrolled / segmentSize),
-    tipCards.length - 1
-  );
+  const n = tipCards.length;
 
-  setTipsStackState(index);
+  // Map scroll position to card index, with a small lead-in bias (0.1 = 10%)
+  // so cards don't change right at the very edge of the step.
+  const progress = scrolled / scrollRun;                   // 0..1
+  const rawIndex = progress * (n - 1);                     // 0..(n-1)
+  const activeIndex = Math.min(Math.floor(rawIndex + 0.08), n - 1);
+
+  setTipsStackState(activeIndex);
 }
 
 if (tipCards.length && tipsSection) {
@@ -478,11 +544,13 @@ if (tipCards.length && tipsSection) {
     tipsSection.classList.toggle('tips--static', useStatic);
 
     if (useStatic) {
+      // On mobile / reduced-motion: plain stacked list, clear all dynamic state
       tipCards.forEach((card) => {
         card.classList.remove('is-past', 'is-next', 'is-active');
         card.style.removeProperty('--depth');
+        card.style.removeProperty('--peek-offset');
       });
-      updateTipsScrollHeight();
+      if (tipsScroll) tipsScroll.style.removeProperty('height');
       return;
     }
 
@@ -514,42 +582,45 @@ const faqAccordion = document.querySelector('[data-accordion]');
 if (faqAccordion) {
   const faqItems = Array.from(faqAccordion.querySelectorAll('.faq-item'));
 
-  const setFaqState = (activeItem) => {
-    faqItems.forEach((item) => {
-      const trigger = item.querySelector('.faq-trigger');
-      const panel = item.querySelector('.faq-panel');
-      const isActive = activeItem === item;
+  const toggleFaqItem = (item) => {
+    const trigger = item.querySelector('.faq-trigger');
+    const panel = item.querySelector('.faq-panel');
+    if (!trigger || !panel) return;
 
-      item.classList.toggle('is-open', isActive);
-      trigger?.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+    const isOpen = item.classList.contains('is-open');
 
-      if (!panel) return;
-      if (isActive) {
-        panel.hidden = false;
-        panel.style.maxHeight = `${panel.scrollHeight}px`;
-      } else {
-        panel.style.maxHeight = '0';
+    if (isOpen) {
+      item.classList.remove('is-open');
+      trigger.setAttribute('aria-expanded', 'false');
+      panel.style.maxHeight = '0';
+      window.setTimeout(() => {
         panel.hidden = true;
-      }
+      }, 380);
+      return;
+    }
+
+    item.classList.add('is-open');
+    trigger.setAttribute('aria-expanded', 'true');
+    panel.hidden = false;
+    window.requestAnimationFrame(() => {
+      panel.style.maxHeight = `${panel.scrollHeight}px`;
     });
   };
 
-  faqItems.forEach((item, index) => {
+  faqItems.forEach((item) => {
     const trigger = item.querySelector('.faq-trigger');
     const panel = item.querySelector('.faq-panel');
-    const isActive = item.classList.contains('is-open');
+    const isOpen = item.classList.contains('is-open');
 
     if (!trigger || !panel) return;
-    panel.hidden = !isActive;
-    panel.style.maxHeight = isActive ? `${panel.scrollHeight}px` : '0';
-    trigger.setAttribute('aria-expanded', isActive ? 'true' : 'false');
 
-    trigger.addEventListener('click', () => {
-      if (item.classList.contains('is-open')) {
-        setFaqState(null);
-        return;
-      }
-      setFaqState(item);
+    panel.hidden = !isOpen;
+    panel.style.maxHeight = isOpen ? `${panel.scrollHeight}px` : '0';
+    trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+
+    trigger.addEventListener('click', (event) => {
+      event.preventDefault();
+      toggleFaqItem(item);
     });
   });
 }
