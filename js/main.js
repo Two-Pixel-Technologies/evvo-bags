@@ -475,30 +475,63 @@ startWhyAutoRotate();
 // ===== TIPS STICKY SCROLL STACK =====
 const tipsSection = document.getElementById('tips');
 const tipsScroll = document.getElementById('tipsScroll');
+const tipsPin = document.querySelector('.tips-pin');
+const tipsHeader = document.querySelector('.tips-header');
+const tipsStack = document.getElementById('tipsStack');
 const tipCards = document.querySelectorAll('#tipsStack .tip-card');
 
-// How many px of the card's top peeks above the active card per past-card layer
-const TIPS_PEEK_PX = 50;
+const TIPS_BOTTOM_PAD = 20;
+const TIPS_PEEK_RATIO = 0.32;
+const TIPS_STEP_RATIO = 0.75;
 
-function setTipsStackState(activeIndex) {
+let tipsMetrics = null;
+
+function measureTips() {
+  if (!tipsScroll || !tipsStack || !tipsPin || !tipCards.length) return null;
+
+  const viewport = window.innerHeight;
+  const stickyTop = parseFloat(getComputedStyle(tipsPin).top) || 92;
+  const cardHeight = tipsStack.offsetHeight;
+  const headerMargin = tipsHeader
+    ? parseFloat(getComputedStyle(tipsHeader).marginBottom) || 0
+    : 0;
+  const pinStickAt = Math.max(0, tipsPin.offsetTop - stickyTop);
+  const maxPeekTotal = Math.max(
+    0,
+    viewport - stickyTop - cardHeight - TIPS_BOTTOM_PAD
+  );
+  const idealPeek = Math.round(cardHeight * TIPS_PEEK_RATIO);
+  const peekPx = Math.max(
+    40,
+    Math.min(idealPeek, Math.floor(maxPeekTotal / (tipCards.length - 1)))
+  );
+  const stepPerCard = Math.max(280, Math.round(cardHeight * TIPS_STEP_RATIO));
+
+  return {
+    viewport,
+    stickyTop,
+    cardHeight,
+    pinStickAt,
+    peekPx,
+    stepPerCard,
+    cardCount: tipCards.length,
+  };
+}
+
+function setTipsStackState(activeIndex, peekPx) {
   tipCards.forEach((card, i) => {
     card.classList.remove('is-active', 'is-past', 'is-next');
 
     if (i === activeIndex) {
-      // Active card: full view, no offset
       card.classList.add('is-active');
       card.style.removeProperty('--depth');
       card.style.removeProperty('--peek-offset');
     } else if (i < activeIndex) {
-      // Past card: peek its top above the active card
       const depth = activeIndex - i;
       card.classList.add('is-past');
       card.style.setProperty('--depth', String(depth));
-      // Negative offset moves the card upward so its top peeks above active card.
-      // Each layer of depth adds another PEEK_PX gap.
-      card.style.setProperty('--peek-offset', `${-depth * TIPS_PEEK_PX}px`);
+      card.style.setProperty('--peek-offset', `${-depth * peekPx}px`);
     } else {
-      // Future card: hidden below
       card.classList.add('is-next');
       card.style.removeProperty('--depth');
       card.style.removeProperty('--peek-offset');
@@ -506,43 +539,70 @@ function setTipsStackState(activeIndex) {
   });
 }
 
+function setTipsStackOffset(activeIndex, metrics) {
+  if (!tipsStack || !metrics) return;
+
+  if (activeIndex === 0) {
+    const fitOffset = Math.max(
+      0,
+      metrics.stickyTop + metrics.cardHeight + TIPS_BOTTOM_PAD - metrics.viewport
+    );
+    tipsStack.style.marginTop = fitOffset > 0 ? `${fitOffset}px` : '0';
+    return;
+  }
+
+  tipsStack.style.marginTop = `${activeIndex * metrics.peekPx}px`;
+}
+
+function clearTipsStackLayout() {
+  if (tipsStack) tipsStack.style.removeProperty('margin-top');
+}
+
 function updateTipsScrollHeight() {
   if (!tipsScroll || !tipCards.length || tipsSection?.classList.contains('tips--static')) {
     if (tipsScroll) tipsScroll.style.removeProperty('height');
+    tipsMetrics = null;
     return;
   }
 
-  // Each card transition gets ~60% of the viewport as scroll runway
-  const stepPerCard = Math.max(320, Math.min(window.innerHeight * 0.60, 560));
-  // Total scroll container height: 1 viewport (to pin the section) + steps for each card switch
-  const totalHeight = window.innerHeight + stepPerCard * (tipCards.length - 1);
-  tipsScroll.style.height = `${totalHeight}px`;
+  tipsMetrics = measureTips();
+  if (!tipsMetrics) return;
+
+  const { viewport, pinStickAt, stepPerCard, cardCount } = tipsMetrics;
+  const stackRun = stepPerCard * (cardCount - 1);
+  tipsScroll.style.height = `${viewport + pinStickAt + stackRun}px`;
 }
 
 function updateTipsStack() {
-  if (!tipsScroll || !tipCards.length) return;
-
-  const rect = tipsScroll.getBoundingClientRect();
-  const viewport = window.innerHeight;
-  // How many px we can scroll within tipsScroll while pinned
-  const scrollRun = tipsScroll.offsetHeight - viewport;
-
-  if (scrollRun <= 0) {
-    setTipsStackState(0);
+  if (
+    !tipsScroll ||
+    !tipCards.length ||
+    !tipsPin ||
+    tipsSection?.classList.contains('tips--static')
+  ) {
     return;
   }
 
-  // How far we've scrolled through the pinned zone (0 → scrollRun)
-  const scrolled = Math.min(Math.max(-rect.top, 0), scrollRun);
-  const n = tipCards.length;
+  if (!tipsMetrics) tipsMetrics = measureTips();
+  if (!tipsMetrics || tipsMetrics.stepPerCard <= 0) return;
 
-  // Map scroll position to card index, with a small lead-in bias (0.1 = 10%)
-  // so cards don't change right at the very edge of the step.
-  const progress = scrolled / scrollRun;                   // 0..1
-  const rawIndex = progress * (n - 1);                     // 0..(n-1)
-  const activeIndex = Math.min(Math.floor(rawIndex + 0.08), n - 1);
+  const { pinStickAt, stepPerCard, peekPx, cardCount } = tipsMetrics;
+  const scrolled = Math.max(0, -tipsScroll.getBoundingClientRect().top);
 
-  setTipsStackState(activeIndex);
+  if (scrolled < pinStickAt) {
+    clearTipsStackLayout();
+    setTipsStackState(0, peekPx);
+    return;
+  }
+
+  const stackScrolled = scrolled - pinStickAt;
+  const activeIndex = Math.min(
+    Math.floor(stackScrolled / stepPerCard),
+    cardCount - 1
+  );
+
+  setTipsStackOffset(activeIndex, tipsMetrics);
+  setTipsStackState(activeIndex, peekPx);
 }
 
 if (tipCards.length && tipsSection) {
@@ -559,6 +619,7 @@ if (tipCards.length && tipsSection) {
         card.style.removeProperty('--depth');
         card.style.removeProperty('--peek-offset');
       });
+      clearTipsStackLayout();
       if (tipsScroll) tipsScroll.style.removeProperty('height');
       return;
     }
@@ -579,10 +640,15 @@ if (tipCards.length && tipsSection) {
   initTipsMode();
 
   if (!prefersReducedMotion && !tipsMobileMq.matches) {
-    requestAnimationFrame(() => {
+    const refreshTipsLayout = () => {
       updateTipsScrollHeight();
       updateTipsStack();
+    };
+    requestAnimationFrame(() => {
+      refreshTipsLayout();
+      requestAnimationFrame(refreshTipsLayout);
     });
+    window.addEventListener('load', refreshTipsLayout);
   }
 }
 

@@ -1892,7 +1892,7 @@ showroom-orbit-ring--2::before,
 
 /* ===== TIPS — STICKY SCROLL STACK ===== */
 .tips {
-  --tips-sticky-top: calc(5rem + 0.75rem);
+  --tips-sticky-top: calc(5rem + 2.75rem);
   --tip-step: 30vh;
   position: relative;
   overflow: clip;
@@ -2033,6 +2033,7 @@ showroom-orbit-ring--2::before,
   .tips-stack {
     height: clamp(300px, 38vh, 380px);
     margin: clamp(1.5rem, 4vw, 2.2rem) auto 0;
+    transition: none;
   }
 }
 
@@ -2048,6 +2049,7 @@ showroom-orbit-ring--2::before,
   position: relative;
   z-index: 1;
   min-height: 0;
+  overflow: visible;
   /* JS overrides height via style attribute for desktop */
 }
 
@@ -2059,6 +2061,7 @@ showroom-orbit-ring--2::before,
   max-width: min(88rem, 100%);
   margin-inline: auto;
   padding-bottom: 0.25rem;
+  overflow: visible;
 }
 
 .tips-header {
@@ -2068,6 +2071,21 @@ showroom-orbit-ring--2::before,
   max-width: 36rem;
   margin: 0 auto clamp(1rem, 2.5vh, 1.6rem);
   padding-bottom: 0;
+}
+
+@media (min-width: 769px) {
+  .tips:not(.tips--static) .tips-header {
+    margin-bottom: clamp(1.5rem, 2vw, 2.5rem);
+  }
+
+  .tips:not(.tips--static) .tips-scroll {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .tips:not(.tips--static) .tips-pin {
+    padding-bottom: 0;
+  }
 }
 
 .tips-header .eyebrow {
@@ -2084,8 +2102,7 @@ showroom-orbit-ring--2::before,
   width: 100%;
   max-width: min(88rem, 100%);
   height: clamp(380px, 50vh, 480px);
-  /* Generous top margin: gives peeked cards space before the header (max 3 cards × 50px = 150px) */
-  margin: clamp(9rem, 18vh, 12rem) auto 0;
+  margin: 0 auto;
 }
 
 .tip-card {
@@ -2099,9 +2116,9 @@ showroom-orbit-ring--2::before,
   transform: translateY(40px) scale(0.96);
   transform-origin: top center;
   transition:
-    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.4s ease,
-    box-shadow 0.4s ease;
+    transform 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.55s ease,
+    box-shadow 0.55s ease;
   will-change: transform, opacity;
 }
 
@@ -2118,10 +2135,10 @@ showroom-orbit-ring--2::before,
   opacity: 1;
   transform:
     translateY(calc(var(--peek-offset, 0px)))
-    scale(calc(1 - var(--depth, 1) * 0.015));
+    scale(1);
   z-index: calc(10 - var(--depth, 1));
   pointer-events: none;
-  filter: saturate(0.9) brightness(0.96);
+  filter: none;
 }
 
 .tip-card.is-next {
@@ -2155,7 +2172,7 @@ showroom-orbit-ring--2::before,
 
 .tip-num {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 7vw, 4.5rem);
+  font-size: clamp(4rem, 8vw, 5.5rem);
   line-height: 0.85;
   letter-spacing: 0.04em;
   color: var(--everglade);
@@ -2180,7 +2197,7 @@ showroom-orbit-ring--2::before,
 
 .tip-card h3 {
   font-family: var(--font-display);
-  font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
   font-weight: 400;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -2190,8 +2207,8 @@ showroom-orbit-ring--2::before,
 }
 
 .tip-card p {
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 1.15rem;
+  line-height: 1.75;
   font-weight: 400;
   color: var(--gunmetal);
   opacity: 0.78;
@@ -2244,11 +2261,11 @@ showroom-orbit-ring--2::before,
 }
 
 .tip-tags li {
-  font-size: 0.58rem;
+  font-size: 0.7rem;
+  padding: 0.4rem 0.9rem;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  padding: 0.3rem 0.7rem;
   border-radius: 999px;
   background: rgba(18, 66, 48, 0.06);
   color: var(--everglade);
@@ -2271,6 +2288,8 @@ showroom-orbit-ring--2::before,
   flex-direction: column;
   gap: 1.25rem;
   max-width: min(88rem, 100%);
+  margin-top: 0 !important;
+  transition: none;
 }
 
 .tips--static .tip-card {
@@ -3678,6 +3697,8 @@ showroom-orbit-ring--2::before,
     flex-direction: column;
     gap: 1.25rem;
     max-width: 100%;
+    margin-top: 0 !important;
+    transition: none;
   }
 
   .tip-card,
