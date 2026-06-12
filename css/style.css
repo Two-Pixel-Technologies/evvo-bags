@@ -3756,6 +3756,10 @@ showroom-orbit-ring--2::before,
     justify-items: center;
   }
 
+  #products.section {
+    padding-inline: max(0.75rem, 3vw);
+  }
+
   .showroom-visual {
     width: 100%;
     justify-content: center;
@@ -3789,6 +3793,11 @@ showroom-orbit-ring--2::before,
 
   .showroom-accordion {
     width: 100%;
+    padding: clamp(0.7rem, 3vw, 1rem);
+  }
+
+  .showroom-body-inner {
+    padding: 0 clamp(0.65rem, 3vw, 0.85rem) 0.95rem;
   }
 
   .showroom-product img {
@@ -3815,7 +3824,26 @@ showroom-orbit-ring--2::before,
   }
 
   .showroom-features {
-    gap: 0.5rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(0.25rem, 1.5vw, 0.5rem);
+  }
+
+  .showroom-features li {
+    min-width: 0;
+    gap: 0.45rem;
+    font-size: clamp(0.48rem, 1.75vw, 0.56rem);
+    letter-spacing: 0.025em;
+    overflow-wrap: anywhere;
+  }
+
+  .showroom-feature-icon {
+    width: clamp(1.55rem, 7vw, 1.85rem);
+    height: clamp(1.55rem, 7vw, 1.85rem);
+  }
+
+  .showroom-feature-icon svg {
+    width: 0.78rem;
+    height: 0.78rem;
   }
 
   .tips-scroll {
@@ -4192,6 +4220,32 @@ showroom-orbit-ring--2::before,
 @media (max-width: 360px) {
   .mob-link {
     font-size: clamp(1.1rem, 5vw, 1.3rem);
+  }
+
+  #products.section {
+    padding-inline: 0.65rem;
+  }
+
+  .showroom-accordion {
+    padding: 0.65rem;
+  }
+
+  .showroom-body-inner {
+    padding-inline: 0.55rem;
+  }
+
+  .showroom-features {
+    gap: 0.22rem;
+  }
+
+  .showroom-features li {
+    font-size: 0.46rem;
+    letter-spacing: 0.015em;
+  }
+
+  .showroom-feature-icon {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
   .showroom-product img {
