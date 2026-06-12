@@ -11,17 +11,12 @@ window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 48);
 });
 
-burger.addEventListener('click', () => {
-  mobNav.classList.add('open');
-  mobNav.setAttribute('aria-hidden', 'false');
-  burger.setAttribute('aria-expanded', 'true');
-});
-
 // prevent background scroll when mobile nav is open
 function openMobileNav() {
   mobNav.classList.add('open');
   mobNav.setAttribute('aria-hidden', 'false');
   burger.setAttribute('aria-expanded', 'true');
+  burger.setAttribute('aria-label', 'Close menu');
   document.body.classList.add('no-scroll');
 }
 
@@ -29,6 +24,7 @@ function closeMobileNavHandler() {
   mobNav.classList.remove('open');
   mobNav.setAttribute('aria-hidden', 'true');
   burger.setAttribute('aria-expanded', 'false');
+  burger.setAttribute('aria-label', 'Open menu');
   document.body.classList.remove('no-scroll');
 }
 
@@ -41,10 +37,14 @@ document.querySelectorAll('.mob-link').forEach((link) => {
   link.addEventListener('click', closeMobileNav);
 });
 
-// Replace previous burger behavior to use openMobileNav helper (avoid duplicate logic)
 if (burger) {
-  burger.removeEventListener && burger.removeEventListener('click', () => {});
-  burger.addEventListener('click', () => openMobileNav());
+  burger.addEventListener('click', () => {
+    if (mobNav.classList.contains('open')) {
+      closeMobileNavHandler();
+    } else {
+      openMobileNav();
+    }
+  });
 }
 
 // Close on Escape
@@ -409,7 +409,12 @@ function setWhyPillar(targetIndex, isRelative = false) {
   const data = WHY_PILLARS[activePillar];
 
   if (!isFirstWhyRender && diff !== 0) {
-    wheelRotationAngle += -360 * diff;
+    // Always rotate exactly ONE full revolution in the correct direction.
+    // This keeps all quadrant positions visually stable (360° = back to origin)
+    // while giving a clear, intentional spin on each pillar change.
+    // Normalising to ±1 prevents excessive multi-rotation on direct slice jumps.
+    const direction = diff > 0 ? -1 : 1;
+    wheelRotationAngle += direction * 360;
   }
   isFirstWhyRender = false;
 
@@ -472,7 +477,12 @@ whyPillars.forEach((pillar) => {
 setWhyPillar(0);
 startWhyAutoRotate();
 
-// ===== TIPS STICKY SCROLL STACK =====
+// ===== TIPS STICKY SCROLL STACK (rebuilt) =====
+// Strategy: Scroll-progress-driven card transitions.
+// - Total section scroll range = (cardCount - 1) * SCROLL_PER_CARD
+// - Each card transition occupies exactly SCROLL_PER_CARD pixels.
+// - Each scroll slot activates exactly one card.
+// - Past cards remain fully visible at a fixed peek offset above active card.
 const tipsSection = document.getElementById('tips');
 const tipsScroll = document.getElementById('tipsScroll');
 const tipsPin = document.querySelector('.tips-pin');
@@ -480,84 +490,49 @@ const tipsHeader = document.querySelector('.tips-header');
 const tipsStack = document.getElementById('tipsStack');
 const tipCards = document.querySelectorAll('#tipsStack .tip-card');
 
-const TIPS_BOTTOM_PAD = 20;
-const TIPS_PEEK_RATIO = 0.32;
-const TIPS_STEP_RATIO = 0.75;
+// ── Constants ──────────────────────────────────────────────────────────────
+// How many pixels of scrolling = one full card transition.
+// Based on card height * SCROLL_RATIO for consistency across screen heights.
+const TIPS_SCROLL_RATIO = 1.1;   // px scroll per card transition (× card height)
+const TIPS_PEEK_RATIO  = 0.30;   // past card peeks 30% of card height above active
+const TIPS_PEEK_MIN    = 40;
+const TIPS_PEEK_MAX    = 120;
+const TIPS_BOTTOM_PAD  = 24;
+const TIPS_HOLD_RATIO  = 1.0;    // dwell on final card before section releases
+// ───────────────────────────────────────────────────────────────────────────
 
 let tipsMetrics = null;
+let tipsActiveIndex = 0;
 
+/**
+ * Measure and cache all layout values needed for scroll calculation.
+ * Re-called on resize.
+ */
 function measureTips() {
   if (!tipsScroll || !tipsStack || !tipsPin || !tipCards.length) return null;
 
-  const viewport = window.innerHeight;
-  const stickyTop = parseFloat(getComputedStyle(tipsPin).top) || 92;
-  const cardHeight = tipsStack.offsetHeight;
-  const headerMargin = tipsHeader
-    ? parseFloat(getComputedStyle(tipsHeader).marginBottom) || 0
-    : 0;
-  const pinStickAt = Math.max(0, tipsPin.offsetTop - stickyTop);
-  const maxPeekTotal = Math.max(
-    0,
-    viewport - stickyTop - cardHeight - TIPS_BOTTOM_PAD
-  );
+  const viewport    = window.innerHeight;
+  const stickyTop   = parseFloat(getComputedStyle(tipsPin).top) || 92;
+  const cardHeight  = tipsStack.offsetHeight;
+  const cardCount   = tipCards.length;
+
+  // peekPx: how far a past card's top edge is above the active card's top edge
   const idealPeek = Math.round(cardHeight * TIPS_PEEK_RATIO);
-  const peekPx = Math.max(
-    40,
-    Math.min(idealPeek, Math.floor(maxPeekTotal / (tipCards.length - 1)))
-  );
-  const stepPerCard = Math.max(280, Math.round(cardHeight * TIPS_STEP_RATIO));
+  const peekPx    = Math.max(TIPS_PEEK_MIN, Math.min(idealPeek, TIPS_PEEK_MAX));
 
-  return {
-    viewport,
-    stickyTop,
-    cardHeight,
-    pinStickAt,
-    peekPx,
-    stepPerCard,
-    cardCount: tipCards.length,
-  };
+  // scrollPerCard: pixels to scroll for one card transition
+  const scrollPerCard = Math.round(cardHeight * TIPS_SCROLL_RATIO);
+  const holdScroll    = Math.round(cardHeight * TIPS_HOLD_RATIO);
+
+  const pinStickAt = Math.max(0, tipsPin.offsetTop - stickyTop);
+
+  return { viewport, stickyTop, cardHeight, peekPx, scrollPerCard, holdScroll, pinStickAt, cardCount };
 }
 
-function setTipsStackState(activeIndex, peekPx) {
-  tipCards.forEach((card, i) => {
-    card.classList.remove('is-active', 'is-past', 'is-next');
-
-    if (i === activeIndex) {
-      card.classList.add('is-active');
-      card.style.removeProperty('--depth');
-      card.style.removeProperty('--peek-offset');
-    } else if (i < activeIndex) {
-      const depth = activeIndex - i;
-      card.classList.add('is-past');
-      card.style.setProperty('--depth', String(depth));
-      card.style.setProperty('--peek-offset', `${-depth * peekPx}px`);
-    } else {
-      card.classList.add('is-next');
-      card.style.removeProperty('--depth');
-      card.style.removeProperty('--peek-offset');
-    }
-  });
-}
-
-function setTipsStackOffset(activeIndex, metrics) {
-  if (!tipsStack || !metrics) return;
-
-  if (activeIndex === 0) {
-    const fitOffset = Math.max(
-      0,
-      metrics.stickyTop + metrics.cardHeight + TIPS_BOTTOM_PAD - metrics.viewport
-    );
-    tipsStack.style.marginTop = fitOffset > 0 ? `${fitOffset}px` : '0';
-    return;
-  }
-
-  tipsStack.style.marginTop = `${activeIndex * metrics.peekPx}px`;
-}
-
-function clearTipsStackLayout() {
-  if (tipsStack) tipsStack.style.removeProperty('margin-top');
-}
-
+/**
+ * Set total height of tipsScroll so the page has enough scroll room for all cards.
+ * height = (viewport to fill sticky pin area) + (cardCount-1) full card transitions
+ */
 function updateTipsScrollHeight() {
   if (!tipsScroll || !tipCards.length || tipsSection?.classList.contains('tips--static')) {
     if (tipsScroll) tipsScroll.style.removeProperty('height');
@@ -568,41 +543,110 @@ function updateTipsScrollHeight() {
   tipsMetrics = measureTips();
   if (!tipsMetrics) return;
 
-  const { viewport, pinStickAt, stepPerCard, cardCount } = tipsMetrics;
-  const stackRun = stepPerCard * (cardCount - 1);
-  tipsScroll.style.height = `${viewport + pinStickAt + stackRun}px`;
+  const { viewport, pinStickAt, scrollPerCard, holdScroll, cardCount } = tipsMetrics;
+  const transitionRun = scrollPerCard * (cardCount - 1);
+  tipsScroll.style.height = `${pinStickAt + viewport + transitionRun + holdScroll}px`;
 }
 
+/**
+ * Apply the discrete card state for the current scroll slot.
+ *
+ * Layout logic:
+ *  - Cards 0..activeIndex-1 : "past" — peeks above active (stackOffset applied)
+ *  - Card activeIndex        : "active" — fully visible, translateY = 0
+ *  - Cards after active      : hidden below
+ */
 function updateTipsStack() {
   if (
     !tipsScroll ||
     !tipCards.length ||
     !tipsPin ||
     tipsSection?.classList.contains('tips--static')
-  ) {
-    return;
-  }
+  ) return;
 
   if (!tipsMetrics) tipsMetrics = measureTips();
-  if (!tipsMetrics || tipsMetrics.stepPerCard <= 0) return;
+  if (!tipsMetrics) return;
 
-  const { pinStickAt, stepPerCard, peekPx, cardCount } = tipsMetrics;
-  const scrolled = Math.max(0, -tipsScroll.getBoundingClientRect().top);
+  const { pinStickAt, scrollPerCard, peekPx, cardCount } = tipsMetrics;
 
-  if (scrolled < pinStickAt) {
-    clearTipsStackLayout();
-    setTipsStackState(0, peekPx);
+  const sectionScrolled = Math.max(0, -tipsScroll.getBoundingClientRect().top);
+
+  if (sectionScrolled <= pinStickAt) {
+    tipsActiveIndex = 0;
+    applyTipsState(0, peekPx);
     return;
   }
 
-  const stackScrolled = scrolled - pinStickAt;
-  const activeIndex = Math.min(
-    Math.floor(stackScrolled / stepPerCard),
+  const stackScrolled = sectionScrolled - pinStickAt;
+
+  // Discrete card index — one clean activation per scrollPerCard block.
+  const targetIndex = Math.min(
+    Math.floor(stackScrolled / scrollPerCard),
     cardCount - 1
   );
 
-  setTipsStackOffset(activeIndex, tipsMetrics);
-  setTipsStackState(activeIndex, peekPx);
+  const indexDelta = targetIndex - tipsActiveIndex;
+  if (Math.abs(indexDelta) > 1) {
+    tipsActiveIndex += Math.sign(indexDelta);
+  } else {
+    tipsActiveIndex = targetIndex;
+  }
+
+  applyTipsState(tipsActiveIndex, peekPx);
+}
+
+/**
+ * @param {number} activeIndex  - card that is fully visible
+ * @param {number} peekPx       - peek amount in px for past cards
+ */
+function applyTipsState(activeIndex, peekPx) {
+  // Stack margin-top: push the stack down so past cards don't hide behind navbar
+  // When activeIndex > 0, the stack shifts down by activeIndex * peekPx
+  if (tipsStack) {
+    tipsStack.style.marginTop = activeIndex > 0
+      ? `${activeIndex * peekPx}px`
+      : '0';
+  }
+
+  tipCards.forEach((card, i) => {
+    card.classList.remove('is-active', 'is-past', 'is-next');
+    // Reset inline transforms — we set them directly below
+    card.style.opacity = '';
+    card.style.transform = '';
+    card.style.zIndex = '';
+    card.style.pointerEvents = '';
+    card.style.boxShadow = '';
+
+    if (i < activeIndex) {
+      // ── Past card ────────────────────────────────────────────────────────
+      const depth = activeIndex - i;
+      const peekOffset = -depth * peekPx;
+      card.classList.add('is-past');
+      card.style.setProperty('--depth', String(depth));
+      card.style.setProperty('--peek-offset', `${peekOffset}px`);
+      card.style.opacity = '1';
+      card.style.transform = `translateY(${peekOffset}px) scale(1)`;
+      card.style.zIndex = String(10 - depth);
+      card.style.pointerEvents = 'none';
+
+    } else if (i === activeIndex) {
+      // ── Active card ──────────────────────────────────────────────────────
+      card.classList.add('is-active');
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0) scale(1)';
+      card.style.zIndex = '10';
+      card.style.pointerEvents = 'auto';
+      card.style.boxShadow = 'var(--shadow-mid)';
+
+    } else {
+      // ── Hidden card ───────────────────────────────────────────────────────
+      card.classList.add('is-next');
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(60px) scale(0.96)';
+      card.style.zIndex = '0';
+      card.style.pointerEvents = 'none';
+    }
+  });
 }
 
 if (tipCards.length && tipsSection) {
@@ -613,17 +657,24 @@ if (tipCards.length && tipsSection) {
     tipsSection.classList.toggle('tips--static', useStatic);
 
     if (useStatic) {
-      // On mobile / reduced-motion: plain stacked list, clear all dynamic state
       tipCards.forEach((card) => {
         card.classList.remove('is-past', 'is-next', 'is-active');
+        card.style.removeProperty('opacity');
+        card.style.removeProperty('transform');
+        card.style.removeProperty('z-index');
+        card.style.removeProperty('pointer-events');
+        card.style.removeProperty('box-shadow');
         card.style.removeProperty('--depth');
         card.style.removeProperty('--peek-offset');
       });
-      clearTipsStackLayout();
+      if (tipsStack) tipsStack.style.removeProperty('margin-top');
       if (tipsScroll) tipsScroll.style.removeProperty('height');
       return;
     }
 
+    // Desktop: set up scroll system
+    tipsMetrics = null; // force remeasure
+    tipsActiveIndex = 0;
     updateTipsScrollHeight();
     updateTipsStack();
   };
@@ -631,6 +682,7 @@ if (tipCards.length && tipsSection) {
   if (!prefersReducedMotion && !tipsMobileMq.matches) {
     window.addEventListener('scroll', updateTipsStack, { passive: true });
     window.addEventListener('resize', () => {
+      tipsMetrics = null; // force remeasure on resize
       updateTipsScrollHeight();
       updateTipsStack();
     });
@@ -640,7 +692,9 @@ if (tipCards.length && tipsSection) {
   initTipsMode();
 
   if (!prefersReducedMotion && !tipsMobileMq.matches) {
+    // Double rAF ensures layout is settled before first measurement
     const refreshTipsLayout = () => {
+      tipsMetrics = null;
       updateTipsScrollHeight();
       updateTipsStack();
     };
