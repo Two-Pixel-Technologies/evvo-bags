@@ -110,16 +110,28 @@ const FEATURE_ICONS = {
   shield: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7l7-4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
   drop: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 3c3 4 6 7 6 10a6 6 0 11-12 0c0-3 3-6 6-10z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
   seal: '<svg viewBox="0 0 24 24" fill="none"><rect x="6" y="8" width="12" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M9 12h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  compact: '<svg viewBox="0 0 24 24" fill="none"><rect x="8" y="7" width="8" height="13" rx="1.4" stroke="currentColor" stroke-width="1.5"/><path d="M10 10h4M10 13h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  pack: '<svg viewBox="0 0 24 24" fill="none"><rect x="6" y="7" width="12" height="13" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M8.5 10.5h7M8.5 14h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  capacity: '<svg viewBox="0 0 24 24" fill="none"><path d="M6 9h12l-1.5 11h-9L6 9z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 9V7a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  stretch: '<svg viewBox="0 0 24 24" fill="none"><path d="M7 8h10M7 16h10M8 8l-3 4 3 4M16 8l3 4-3 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  size: '<svg viewBox="0 0 24 24" fill="none"><path d="M5 9V5h4M19 9V5h-4M5 15v4h4M19 15v4h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  bin: '<svg viewBox="0 0 24 24" fill="none"><path d="M7 8h10l-1 12H8L7 8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 8V5h6v3M6 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
 };
 
-const CALLOUT_ICONS = [
-  '<svg viewBox="0 0 24 24" fill="none"><rect x="6" y="8" width="12" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>',
-  '<svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16M4 16h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
-  FEATURE_ICONS.seal,
-  FEATURE_ICONS.shield,
-  FEATURE_ICONS.drop,
-  '<svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7l7-4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
-];
+function iconForLabel(label, fallback = 'default') {
+  const key = label.toLowerCase();
+  if (key.includes('bag') || key.includes('pack')) return FEATURE_ICONS.pack;
+  if (key.includes('capacity')) return FEATURE_ICONS.capacity;
+  if (key.includes('seal')) return FEATURE_ICONS.seal;
+  if (key.includes('leak')) return FEATURE_ICONS.drop;
+  if (key.includes('tear') || key.includes('strength') || key.includes('heavy')) return FEATURE_ICONS.shield;
+  if (key.includes('stretch')) return FEATURE_ICONS.stretch;
+  if (key.includes('compact') || key.includes('lightweight')) return FEATURE_ICONS.compact;
+  if (key.includes('size') || key.includes('extra') || key.includes('maximum')) return FEATURE_ICONS.size;
+  if (key.includes('outdoor') || key.includes('bin')) return FEATURE_ICONS.bin;
+  if (key.includes('seller') || key.includes('everyday')) return FEATURE_ICONS.star;
+  return FEATURE_ICONS[fallback] || FEATURE_ICONS.default;
+}
 
 const PRODUCTS = {
   small: {
@@ -130,7 +142,7 @@ const PRODUCTS = {
     use: 'Bathroom, desk & utility bins',
     alt: 'EVVO Small garbage bags',
     features: ['Lightweight', 'Compact Fit', 'Everyday Use', 'Machine Sealed'],
-    featureIcons: ['default', 'default', 'default', 'seal'],
+    featureIcons: ['compact', 'compact', 'star', 'seal'],
     callouts: ['40 Bags Per Pack', '10L Capacity', 'Machine Sealed', 'Lightweight', 'Compact Fit', 'Everyday Use'],
   },
   medium: {
@@ -152,7 +164,7 @@ const PRODUCTS = {
     use: 'Large bins & heavy waste',
     alt: 'EVVO Large garbage bags',
     features: ['Super Strength', 'Heavy Duty', 'Stretchable', 'Machine Sealed'],
-    featureIcons: ['shield', 'shield', 'default', 'seal'],
+    featureIcons: ['shield', 'shield', 'stretch', 'seal'],
     callouts: ['15 Bags Per Pack', '35L Capacity', 'Machine Sealed', 'Heavy Duty', 'Super Strength', 'Outdoor Bins'],
   },
   'extra-large': {
@@ -163,7 +175,7 @@ const PRODUCTS = {
     use: 'Outdoor & wheelie bins',
     alt: 'EVVO Extra Large garbage bags',
     features: ['Extra Capacity', 'Heavy Duty', 'Tear Resistant', 'Leak Proof'],
-    featureIcons: ['default', 'shield', 'shield', 'drop'],
+    featureIcons: ['capacity', 'shield', 'shield', 'drop'],
     callouts: ['10 Bags Per Pack', '50L Capacity', 'Heavy Duty', 'Extra Capacity', 'Leak Proof', 'Tear Resistant'],
   },
   jumbo: {
@@ -174,7 +186,7 @@ const PRODUCTS = {
     use: 'Commercial & jumbo bins',
     alt: 'EVVO Jumbo garbage bags',
     features: ['Maximum Size', 'Super Strength', 'Heavy Duty', 'Machine Sealed'],
-    featureIcons: ['default', 'shield', 'shield', 'seal'],
+    featureIcons: ['size', 'shield', 'shield', 'seal'],
     callouts: ['8 Bags Per Pack', '75L Capacity', 'Maximum Size', 'Super Strength', 'Heavy Duty', 'Machine Sealed'],
   },
 };
@@ -193,7 +205,7 @@ function renderCallouts(callouts) {
       .map(
         (label, i) => `
         <li class="showroom-callout showroom-callout--${i + 1}">
-          <span class="showroom-callout-bubble" aria-hidden="true">${CALLOUT_ICONS[i] || FEATURE_ICONS.default}</span>
+          <span class="showroom-callout-bubble" aria-hidden="true">${iconForLabel(label)}</span>
           <span>${label}</span>
         </li>`
       )
@@ -320,28 +332,24 @@ const WHY_PILLARS = [
     num: '01',
     title: '35+ Years of Expertise',
     desc: 'Backed by decades of packaging knowledge and reliable manufacturing standards.',
-    turn: '0deg',
   },
   {
     accent: 'var(--golden-glow)',
     num: '02',
     title: 'Unmatched Strength',
     desc: 'Built to resist tearing, stretching, and everyday pressure.',
-    turn: '-90deg',
   },
   {
     accent: 'var(--mimi-pink)',
     num: '03',
     title: 'Leak-Proof Protection',
     desc: 'Machine-sealed edges help reduce leaks, spills, and daily mess.',
-    turn: '-180deg',
   },
   {
     accent: 'var(--greenish-beige)',
     num: '04',
     title: 'Consistent Quality',
     desc: 'Reliable production ensures every pack performs the way it should.',
-    turn: '-270deg',
   },
 ];
 
@@ -389,9 +397,6 @@ function updateWhyDetail(data) {
   setTimeout(applyContent, 180);
 }
 
-let wheelRotationAngle = 0;
-let isFirstWhyRender = true;
-
 function setWhyPillar(targetIndex, isRelative = false) {
   let diff = 0;
   if (isRelative) {
@@ -408,18 +413,8 @@ function setWhyPillar(targetIndex, isRelative = false) {
   activePillar = ((cumulativePillarIndex % 4) + 4) % 4;
   const data = WHY_PILLARS[activePillar];
 
-  if (!isFirstWhyRender && diff !== 0) {
-    // Always rotate exactly ONE full revolution in the correct direction.
-    // This keeps all quadrant positions visually stable (360° = back to origin)
-    // while giving a clear, intentional spin on each pillar change.
-    // Normalising to ±1 prevents excessive multi-rotation on direct slice jumps.
-    const direction = diff > 0 ? -1 : 1;
-    wheelRotationAngle += direction * 360;
-  }
-  isFirstWhyRender = false;
-
   if (whyWheelDisc) {
-    whyWheelDisc.style.setProperty('--wheel-turn', `${wheelRotationAngle}deg`);
+    whyWheelDisc.style.setProperty('--wheel-turn', '0deg');
   }
 
   whySlices.forEach((slice) => {
@@ -573,15 +568,16 @@ function updateTipsStack() {
 
   if (sectionScrolled <= pinStickAt) {
     tipsActiveIndex = 0;
-    applyTipsState(0, peekPx);
+    applyTipsState(0, peekPx, 0);
     return;
   }
 
   const stackScrolled = sectionScrolled - pinStickAt;
+  const rawProgress = Math.max(0, stackScrolled / scrollPerCard);
 
   // Discrete card index — one clean activation per scrollPerCard block.
   const targetIndex = Math.min(
-    Math.floor(stackScrolled / scrollPerCard),
+    Math.floor(rawProgress),
     cardCount - 1
   );
 
@@ -592,20 +588,31 @@ function updateTipsStack() {
     tipsActiveIndex = targetIndex;
   }
 
-  applyTipsState(tipsActiveIndex, peekPx);
+  const localProgress = tipsActiveIndex >= cardCount - 1
+    ? 0
+    : Math.max(0, Math.min(rawProgress - tipsActiveIndex, 0.999));
+
+  applyTipsState(tipsActiveIndex, peekPx, localProgress);
 }
 
 /**
  * @param {number} activeIndex  - card that is fully visible
  * @param {number} peekPx       - peek amount in px for past cards
  */
-function applyTipsState(activeIndex, peekPx) {
+function applyTipsState(activeIndex, peekPx, progress = 0) {
+  const eased = 1 - Math.pow(1 - progress, 3);
+  const incomingTravel = tipsMetrics
+    ? Math.max(220, Math.min(tipsMetrics.cardHeight * 0.72, 340))
+    : 260;
+
   // Stack margin-top: push the stack down so past cards don't hide behind navbar
   // When activeIndex > 0, the stack shifts down by activeIndex * peekPx
   if (tipsStack) {
     tipsStack.style.marginTop = activeIndex > 0
-      ? `${activeIndex * peekPx}px`
-      : '0';
+      ? `${(activeIndex + progress) * peekPx}px`
+      : progress > 0
+        ? `${progress * peekPx}px`
+        : '0';
   }
 
   tipCards.forEach((card, i) => {
@@ -616,11 +623,12 @@ function applyTipsState(activeIndex, peekPx) {
     card.style.zIndex = '';
     card.style.pointerEvents = '';
     card.style.boxShadow = '';
+    card.style.visibility = '';
 
     if (i < activeIndex) {
       // ── Past card ────────────────────────────────────────────────────────
       const depth = activeIndex - i;
-      const peekOffset = -depth * peekPx;
+      const peekOffset = -(depth + progress) * peekPx;
       card.classList.add('is-past');
       card.style.setProperty('--depth', String(depth));
       card.style.setProperty('--peek-offset', `${peekOffset}px`);
@@ -628,23 +636,36 @@ function applyTipsState(activeIndex, peekPx) {
       card.style.transform = `translateY(${peekOffset}px) scale(1)`;
       card.style.zIndex = String(10 - depth);
       card.style.pointerEvents = 'none';
+      card.style.visibility = 'visible';
 
     } else if (i === activeIndex) {
       // ── Active card ──────────────────────────────────────────────────────
       card.classList.add('is-active');
       card.style.opacity = '1';
-      card.style.transform = 'translateY(0) scale(1)';
+      card.style.transform = `translateY(${-progress * peekPx * 1.35}px) scale(1)`;
       card.style.zIndex = '10';
       card.style.pointerEvents = 'auto';
       card.style.boxShadow = 'var(--shadow-mid)';
+      card.style.visibility = 'visible';
+
+    } else if (i === activeIndex + 1) {
+      const enterY = (1 - eased) * incomingTravel;
+      card.classList.add('is-next');
+      card.style.opacity = '1';
+      card.style.transform = `translateY(${enterY}px) scale(1)`;
+      card.style.zIndex = '11';
+      card.style.pointerEvents = progress > 0.92 ? 'auto' : 'none';
+      card.style.boxShadow = 'var(--shadow-mid)';
+      card.style.visibility = 'visible';
 
     } else {
       // ── Hidden card ───────────────────────────────────────────────────────
       card.classList.add('is-next');
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(60px) scale(0.96)';
+      card.style.opacity = '1';
+      card.style.transform = `translateY(${incomingTravel}px) scale(1)`;
       card.style.zIndex = '0';
       card.style.pointerEvents = 'none';
+      card.style.visibility = 'hidden';
     }
   });
 }
@@ -664,6 +685,7 @@ if (tipCards.length && tipsSection) {
         card.style.removeProperty('z-index');
         card.style.removeProperty('pointer-events');
         card.style.removeProperty('box-shadow');
+        card.style.removeProperty('visibility');
         card.style.removeProperty('--depth');
         card.style.removeProperty('--peek-offset');
       });

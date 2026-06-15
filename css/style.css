@@ -1060,9 +1060,7 @@ ul {
   grid-template-rows: 1fr 1fr;
   border-radius: 50%;
   overflow: hidden;
-  transform: rotate(var(--wheel-turn, 0deg));
-  /* Elegant deceleration curve for a luxury feel */
-  transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+  transform: none;
   box-shadow:
     0 0 0 8px rgba(255,255,255,0.75),
     0 18px 45px rgba(18,66,48,0.12),
@@ -1129,9 +1127,7 @@ ul {
   gap: 0.25rem;
   width: 100%;
   height: 100%;
-  transform: rotate(calc(-1 * var(--wheel-turn, 0deg)));
-  /* Match disc rotation duration */
-  transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+  transform: none;
 }
 
 .why-slice-icon {
@@ -1201,12 +1197,16 @@ ul {
 
 .why-pillar {
   max-width: 14.5rem;
+  min-height: 10.4rem;
   padding: 1.25rem 1.5rem;
   border-radius: var(--radius-sm);
   background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(4px);
   border: 1px solid rgba(18, 66, 48, 0.06);
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   transition: opacity 0.45s var(--ease), transform 0.45s var(--ease), background 0.35s var(--ease), border-color 0.35s var(--ease), box-shadow 0.35s var(--ease);
   opacity: 0.52;
 }
@@ -2102,6 +2102,16 @@ showroom-orbit-ring--2::before,
   .tips:not(.tips--static) .tips-stack {
     position: relative;
     z-index: 1;
+  }
+
+  .tips:not(.tips--static) .tip-illust {
+    width: clamp(5.25rem, 8.8vw, 6.75rem);
+    height: clamp(5.25rem, 8.8vw, 6.75rem);
+  }
+
+  .tips:not(.tips--static) .tip-icon {
+    width: 58%;
+    height: 58%;
   }
 }
 
@@ -3901,11 +3911,11 @@ showroom-orbit-ring--2::before,
   }
 
   .why-slice--bl .why-slice-content {
-    transform: rotate(calc(-1 * var(--wheel-turn, 0deg))) translateY(-10px) translateX(3px);
+    transform: translateY(-10px) translateX(3px);
   }
 
   .why-slice--br .why-slice-content {
-    transform: rotate(calc(-1 * var(--wheel-turn, 0deg))) translateY(-10px) translateX(-3px);
+    transform: translateY(-10px) translateX(-3px);
   }
 
   .why-slice--bl {
@@ -3942,6 +3952,28 @@ showroom-orbit-ring--2::before,
     gap: clamp(0.85rem, 3.5vw, 1.35rem);
   }
 
+  .about-media {
+    max-width: min(100%, 21rem);
+  }
+
+  .about-visual {
+    min-height: clamp(13.5rem, 55vw, 18rem);
+  }
+
+  .about-visual-panel {
+    right: 0.2rem;
+    top: 18%;
+    width: 38%;
+    height: 56%;
+    border-radius: 1.4rem;
+    background: rgba(18, 66, 48, 0.08);
+  }
+
+  .about-visual-frame {
+    padding: clamp(0.85rem, 3vw, 1.1rem);
+    border-radius: 1.65rem;
+  }
+
   .about-showcase {
     min-height: clamp(250px, 62vw, 310px);
     padding: 1rem 0.35rem 0.35rem;
@@ -3960,20 +3992,23 @@ showroom-orbit-ring--2::before,
   }
 
   .about-badge {
-    left: -0.15rem;
-    top: 56%;
-    width: 3.35rem;
-    height: 3.35rem;
-    padding: 0.35rem;
+    left: 0.45rem;
+    top: 0.55rem;
+    width: 3.85rem;
+    height: 3.85rem;
+    padding: 0.42rem;
   }
 
   .about-badge-num {
-    font-size: 1rem;
+    font-size: 1.02rem;
   }
 
   .about-badge-label {
     font-size: 0.38rem;
-    margin-top: 0.12rem;
+    line-height: 1.12;
+    letter-spacing: 0.08em;
+    margin-top: 0.08rem;
+    max-width: 3.15rem;
   }
 
   .about-stage {
@@ -3981,8 +4016,8 @@ showroom-orbit-ring--2::before,
   }
 
   .about-product img {
-    max-height: clamp(150px, 34vw, 210px);
-    max-width: 13.5rem;
+    max-height: clamp(140px, 36vw, 200px);
+    max-width: min(100%, 14rem);
   }
 
   .about-pedestal-disc {
