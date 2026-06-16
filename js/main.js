@@ -512,9 +512,9 @@ function easeInOutCubic(t) {
 
 function lockTipsProgress(t) {
   const p = Math.max(0, Math.min(t, 1));
-  if (p < 0.12) return 0;
-  if (p > 0.88) return 1;
-  return (p - 0.12) / 0.76;
+  if (p < 0.16) return 0;
+  if (p > 0.84) return 1;
+  return (p - 0.16) / 0.68;
 }
 
 /**
