@@ -141,7 +141,7 @@ const PRODUCTS = {
     desc: 'Compact format for desk bins, bathroom waste, and tight spaces where a lighter liner is all you need.',
     use: 'Bathroom, desk & utility bins',
     alt: 'EVVO Small garbage bags',
-    features: ['Lightweight', 'Compact Fit', 'Everyday Use', 'Machine Sealed'],
+    features: ['Light Weight', 'Compact Fit', 'Everyday Use', 'Machine Sealed'],
     featureIcons: ['compact', 'compact', 'star', 'seal'],
     callouts: ['40 Bags Per Pack', '10L Capacity', 'Machine Sealed', 'Lightweight', 'Compact Fit', 'Everyday Use'],
   },
@@ -163,7 +163,7 @@ const PRODUCTS = {
     desc: 'Super-strength format for heavy loads, outdoor bins, and high-capacity household waste.',
     use: 'Large bins & heavy waste',
     alt: 'EVVO Large garbage bags',
-    features: ['Super Strength', 'Heavy Duty', 'Stretchable', 'Machine Sealed'],
+    features: ['Super Strength', 'Heavy Duty', 'Extra Stretch', 'Machine Sealed'],
     featureIcons: ['shield', 'shield', 'stretch', 'seal'],
     callouts: ['15 Bags Per Pack', '35L Capacity', 'Machine Sealed', 'Heavy Duty', 'Super Strength', 'Outdoor Bins'],
   },
@@ -205,7 +205,6 @@ function renderCallouts(callouts) {
       .map(
         (label, i) => `
         <li class="showroom-callout showroom-callout--${i + 1}">
-          <span class="showroom-callout-bubble" aria-hidden="true">${iconForLabel(label)}</span>
           <span>${label}</span>
         </li>`
       )
@@ -504,6 +503,13 @@ function easeInOutCubic(t) {
   return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
 }
 
+function lockTipsProgress(t) {
+  const p = Math.max(0, Math.min(t, 1));
+  if (p < 0.12) return 0;
+  if (p > 0.88) return 1;
+  return (p - 0.12) / 0.76;
+}
+
 /**
  * Measure and cache all layout values needed for scroll calculation.
  * Re-called on resize.
@@ -594,7 +600,7 @@ function updateTipsStack() {
 function applyTipsState(activeIndex, peekPx, progress = 0) {
   const cardHeight = tipsMetrics?.cardHeight || tipsStack?.offsetHeight || 420;
   const slideDistance = Math.round(cardHeight * 0.82);
-  const clampedProgress = Math.max(0, Math.min(progress, 1));
+  const clampedProgress = lockTipsProgress(progress);
   const easedProgress = easeInOutCubic(clampedProgress);
 
   if (tipsStack) {
