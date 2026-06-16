@@ -34,7 +34,19 @@ const closeMobileNav = () => {
 
 mobClose.addEventListener('click', closeMobileNav);
 document.querySelectorAll('.mob-link').forEach((link) => {
-  link.addEventListener('click', closeMobileNav);
+  link.addEventListener('click', (event) => {
+    const targetId = link.getAttribute('href');
+    const target = targetId?.startsWith('#') ? document.querySelector(targetId) : null;
+
+    closeMobileNav();
+
+    if (!target || !window.matchMedia('(max-width: 768px)').matches) return;
+
+    event.preventDefault();
+    const navHeight = nav?.offsetHeight || 60;
+    const targetTop = target.getBoundingClientRect().top + window.scrollY - navHeight;
+    window.scrollTo({ top: targetTop, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+  });
 });
 
 if (burger) {
@@ -143,7 +155,7 @@ const PRODUCTS = {
     alt: 'EVVO Small garbage bags',
     features: ['Light Weight', 'Compact Fit', 'Everyday Use', 'Machine Sealed'],
     featureIcons: ['compact', 'compact', 'star', 'seal'],
-    callouts: ['40 Bags Per Pack', '10L Capacity', 'Machine Sealed', 'Lightweight', 'Compact Fit', 'Everyday Use'],
+    callouts: ['40 Bags Per Pack', '10L Capacity', 'Machine Sealed', 'Light Weight', 'Compact Fit', 'Everyday Use'],
   },
   medium: {
     spec: '19 in × 20 in · 30 bags per pack',
@@ -226,10 +238,17 @@ function renderFeatures(list, features, icons) {
     .map(
       (label) => `
       <li>
-        <span>${label}</span>
+        <span>${formatFeatureLabel(label)}</span>
       </li>`
     )
     .join('');
+}
+
+function formatFeatureLabel(label) {
+  const words = label.split(' ');
+  if (words.length <= 1) return label;
+  const midpoint = Math.ceil(words.length / 2);
+  return `${words.slice(0, midpoint).join(' ')} <span class="showroom-feature-mobile-break"><br></span>${words.slice(midpoint).join(' ')}`;
 }
 
 function populateShowroomItem(item, data) {
