@@ -105,17 +105,17 @@ if (!prefersReducedMotion) {
 const PRODUCT_IMAGE = 'images/products/pack-tall.png';
 
 const FEATURE_ICONS = {
-  default: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5"/></svg>',
-  star: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 3l2.4 5.2 5.7.5-4.3 3.7 1.3 5.6L12 15.8 6.9 18l1.3-5.6L4 8.7l5.7-.5L12 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
-  shield: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7l7-4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
-  drop: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 3c3 4 6 7 6 10a6 6 0 11-12 0c0-3 3-6 6-10z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
-  seal: '<svg viewBox="0 0 24 24" fill="none"><rect x="6" y="8" width="12" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M9 12h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
-  compact: '<svg viewBox="0 0 24 24" fill="none"><rect x="8" y="7" width="8" height="13" rx="1.4" stroke="currentColor" stroke-width="1.5"/><path d="M10 10h4M10 13h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
-  pack: '<svg viewBox="0 0 24 24" fill="none"><rect x="6" y="7" width="12" height="13" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M8.5 10.5h7M8.5 14h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
-  capacity: '<svg viewBox="0 0 24 24" fill="none"><path d="M6 9h12l-1.5 11h-9L6 9z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 9V7a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
-  stretch: '<svg viewBox="0 0 24 24" fill="none"><path d="M7 8h10M7 16h10M8 8l-3 4 3 4M16 8l3 4-3 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  size: '<svg viewBox="0 0 24 24" fill="none"><path d="M5 9V5h4M19 9V5h-4M5 15v4h4M19 15v4h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  bin: '<svg viewBox="0 0 24 24" fill="none"><path d="M7 8h10l-1 12H8L7 8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 8V5h6v3M6 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  default: '<svg viewBox="0 0 24 24" fill="none"><path d="M6.5 7.5h11l1.5 3.2v8.8h-14v-8.8l1.5-3.2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M5 10.7h14M9 14h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  star: '<svg viewBox="0 0 24 24" fill="none"><path d="M7 8h10l1 3H6l1-3zM6 11h12v8H6v-8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 15h6M12 11v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  shield: '<svg viewBox="0 0 24 24" fill="none"><path d="M6.5 8.5h11l-1 11h-9l-1-11z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 8.5V6.8c0-1.7 1.3-2.8 3-2.8s3 1.1 3 2.8v1.7M8.5 13h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  drop: '<svg viewBox="0 0 24 24" fill="none"><path d="M8 5.5h8v14H8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9.8 9.5h4.4M9.8 13.5h4.4M15.8 17.5c1.7-1.4 2.7-3.1 2.7-5.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  seal: '<svg viewBox="0 0 24 24" fill="none"><path d="M5.5 9h13v9.5h-13z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7.5 12h9M7.5 15.5h9M9 6.5h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  compact: '<svg viewBox="0 0 24 24" fill="none"><path d="M9 5.5h6v14H9z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10.8 9h2.4M10.8 12h2.4M10.8 15h2.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  pack: '<svg viewBox="0 0 24 24" fill="none"><path d="M7 6h10l1.5 4H5.5L7 6zM5.5 10h13v9h-13v-9z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.5 13h7M8.5 16h4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  capacity: '<svg viewBox="0 0 24 24" fill="none"><path d="M6.5 8.5h11l-1 11h-9l-1-11z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.8 12.5h6.4M8.8 15.5h4.8M10 6.5h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  stretch: '<svg viewBox="0 0 24 24" fill="none"><path d="M7 7h10v10H7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M4 12h16M4 12l2.5-2.5M4 12l2.5 2.5M20 12l-2.5-2.5M20 12l-2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  size: '<svg viewBox="0 0 24 24" fill="none"><path d="M5.5 6.5h13v11h-13z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 20h8M8 4h8M5.5 10.5h13M9.5 6.5v11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  bin: '<svg viewBox="0 0 24 24" fill="none"><path d="M7 8h10l-1 11.5H8L7 8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 8V5.5h6V8M6 8h12M9.5 12h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
 };
 
 function iconForLabel(label, fallback = 'default') {
@@ -218,9 +218,8 @@ function renderFeatures(list, features, icons) {
   if (!list) return;
   list.innerHTML = features
     .map(
-      (label, i) => `
+      (label) => `
       <li>
-        <span class="showroom-feature-icon" aria-hidden="true">${FEATURE_ICONS[icons[i] || 'default']}</span>
         <span>${label}</span>
       </li>`
     )
@@ -486,18 +485,24 @@ const tipsStack = document.getElementById('tipsStack');
 const tipCards = document.querySelectorAll('#tipsStack .tip-card');
 
 // ── Constants ──────────────────────────────────────────────────────────────
-// How many pixels of scrolling = one full card transition.
-// Based on card height * SCROLL_RATIO for consistency across screen heights.
-const TIPS_SCROLL_RATIO = 1.1;   // px scroll per card transition (× card height)
-const TIPS_PEEK_RATIO  = 0.30;   // past card peeks 30% of card height above active
+const TIPS_SCROLL_RATIO = 1.28;   // scroll distance per card transition (× card height)
+const TIPS_PEEK_RATIO  = 0.30;   // past card peeks ~30% above active card
 const TIPS_PEEK_MIN    = 40;
 const TIPS_PEEK_MAX    = 120;
 const TIPS_BOTTOM_PAD  = 24;
-const TIPS_HOLD_RATIO  = 1.0;    // dwell on final card before section releases
+const TIPS_HOLD_RATIO  = 0.85;    // dwell on final card before section releases
 // ───────────────────────────────────────────────────────────────────────────
 
 let tipsMetrics = null;
-let tipsActiveIndex = 0;
+
+function easeOutQuart(t) {
+  return 1 - Math.pow(1 - Math.max(0, Math.min(t, 1)), 4);
+}
+
+function easeInOutCubic(t) {
+  const p = Math.max(0, Math.min(t, 1));
+  return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+}
 
 /**
  * Measure and cache all layout values needed for scroll calculation.
@@ -544,12 +549,8 @@ function updateTipsScrollHeight() {
 }
 
 /**
- * Apply the discrete card state for the current scroll slot.
- *
- * Layout logic:
- *  - Cards 0..activeIndex-1 : "past" — peeks above active (stackOffset applied)
- *  - Card activeIndex        : "active" — fully visible, translateY = 0
- *  - Cards after active      : hidden below
+ * Scroll-linked stacked cards — progress drives translateY directly.
+ * Scrolling down/up uses the same interpolation in reverse.
  */
 function updateTipsStack() {
   if (
@@ -563,72 +564,56 @@ function updateTipsStack() {
   if (!tipsMetrics) return;
 
   const { pinStickAt, scrollPerCard, peekPx, cardCount } = tipsMetrics;
-
   const sectionScrolled = Math.max(0, -tipsScroll.getBoundingClientRect().top);
 
   if (sectionScrolled <= pinStickAt) {
-    tipsActiveIndex = 0;
     applyTipsState(0, peekPx, 0);
     return;
   }
 
   const stackScrolled = sectionScrolled - pinStickAt;
-  const rawProgress = Math.max(0, stackScrolled / scrollPerCard);
+  const transitionRun = scrollPerCard * (cardCount - 1);
 
-  // Discrete card index — one clean activation per scrollPerCard block.
-  const targetIndex = Math.min(
-    Math.floor(rawProgress),
-    cardCount - 1
-  );
-
-  const indexDelta = targetIndex - tipsActiveIndex;
-  if (Math.abs(indexDelta) > 1) {
-    tipsActiveIndex += Math.sign(indexDelta);
-  } else {
-    tipsActiveIndex = targetIndex;
+  if (stackScrolled >= transitionRun) {
+    applyTipsState(cardCount - 1, peekPx, 0);
+    return;
   }
 
-  const localProgress = tipsActiveIndex >= cardCount - 1
-    ? 0
-    : Math.max(0, Math.min(rawProgress - tipsActiveIndex, 0.999));
+  const slotFloat = stackScrolled / scrollPerCard;
+  const activeIndex = Math.min(Math.floor(slotFloat + 1e-6), cardCount - 1);
+  const slotProgress = slotFloat - activeIndex;
 
-  applyTipsState(tipsActiveIndex, peekPx, localProgress);
+  applyTipsState(activeIndex, peekPx, slotProgress);
 }
 
 /**
- * @param {number} activeIndex  - card that is fully visible
+ * @param {number} activeIndex  - settled card for this scroll slot
  * @param {number} peekPx       - peek amount in px for past cards
+ * @param {number} progress     - 0→1 progress into the next card transition
  */
 function applyTipsState(activeIndex, peekPx, progress = 0) {
-  const eased = 1 - Math.pow(1 - progress, 3);
-  const incomingTravel = tipsMetrics
-    ? Math.max(220, Math.min(tipsMetrics.cardHeight * 0.72, 340))
-    : 260;
+  const cardHeight = tipsMetrics?.cardHeight || tipsStack?.offsetHeight || 420;
+  const slideDistance = Math.round(cardHeight * 0.82);
+  const clampedProgress = Math.max(0, Math.min(progress, 1));
+  const easedProgress = easeInOutCubic(clampedProgress);
 
-  // Stack margin-top: push the stack down so past cards don't hide behind navbar
-  // When activeIndex > 0, the stack shifts down by activeIndex * peekPx
   if (tipsStack) {
-    tipsStack.style.marginTop = activeIndex > 0
-      ? `${(activeIndex + progress) * peekPx}px`
-      : progress > 0
-        ? `${progress * peekPx}px`
-        : '0';
+    const stackLift = activeIndex * peekPx + peekPx * easedProgress;
+    tipsStack.style.marginTop = `${stackLift}px`;
   }
 
   tipCards.forEach((card, i) => {
     card.classList.remove('is-active', 'is-past', 'is-next');
-    // Reset inline transforms — we set them directly below
-    card.style.opacity = '';
-    card.style.transform = '';
-    card.style.zIndex = '';
-    card.style.pointerEvents = '';
-    card.style.boxShadow = '';
-    card.style.visibility = '';
+    card.style.removeProperty('opacity');
+    card.style.removeProperty('transform');
+    card.style.removeProperty('z-index');
+    card.style.removeProperty('pointer-events');
+    card.style.removeProperty('box-shadow');
+    card.style.removeProperty('visibility');
 
     if (i < activeIndex) {
-      // ── Past card ────────────────────────────────────────────────────────
       const depth = activeIndex - i;
-      const peekOffset = -(depth + progress) * peekPx;
+      const peekOffset = -(depth * peekPx + peekPx * easedProgress);
       card.classList.add('is-past');
       card.style.setProperty('--depth', String(depth));
       card.style.setProperty('--peek-offset', `${peekOffset}px`);
@@ -636,36 +621,32 @@ function applyTipsState(activeIndex, peekPx, progress = 0) {
       card.style.transform = `translateY(${peekOffset}px) scale(1)`;
       card.style.zIndex = String(10 - depth);
       card.style.pointerEvents = 'none';
-      card.style.visibility = 'visible';
 
     } else if (i === activeIndex) {
-      // ── Active card ──────────────────────────────────────────────────────
+      const activeOffset = -peekPx * easedProgress;
       card.classList.add('is-active');
       card.style.opacity = '1';
-      card.style.transform = `translateY(${-progress * peekPx * 1.35}px) scale(1)`;
+      card.style.transform = `translateY(${activeOffset}px) scale(1)`;
       card.style.zIndex = '10';
       card.style.pointerEvents = 'auto';
       card.style.boxShadow = 'var(--shadow-mid)';
-      card.style.visibility = 'visible';
 
-    } else if (i === activeIndex + 1) {
-      const enterY = (1 - eased) * incomingTravel;
+    } else if (i === activeIndex + 1 && clampedProgress > 0) {
+      const translateY = slideDistance * (1 - easedProgress);
+      const opacity = Math.min(1, 0.18 + clampedProgress * 1.08);
       card.classList.add('is-next');
-      card.style.opacity = '1';
-      card.style.transform = `translateY(${enterY}px) scale(1)`;
+      card.style.opacity = String(opacity);
+      card.style.transform = `translateY(${translateY}px) scale(1)`;
       card.style.zIndex = '11';
-      card.style.pointerEvents = progress > 0.92 ? 'auto' : 'none';
+      card.style.pointerEvents = 'none';
       card.style.boxShadow = 'var(--shadow-mid)';
-      card.style.visibility = 'visible';
 
     } else {
-      // ── Hidden card ───────────────────────────────────────────────────────
       card.classList.add('is-next');
-      card.style.opacity = '1';
-      card.style.transform = `translateY(${incomingTravel}px) scale(1)`;
+      card.style.opacity = '0';
+      card.style.transform = `translateY(${slideDistance}px) scale(1)`;
       card.style.zIndex = '0';
       card.style.pointerEvents = 'none';
-      card.style.visibility = 'hidden';
     }
   });
 }
@@ -696,7 +677,6 @@ if (tipCards.length && tipsSection) {
 
     // Desktop: set up scroll system
     tipsMetrics = null; // force remeasure
-    tipsActiveIndex = 0;
     updateTipsScrollHeight();
     updateTipsStack();
   };
