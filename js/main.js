@@ -205,12 +205,19 @@ function renderCallouts(callouts) {
       .map(
         (label, i) => `
         <li class="showroom-callout showroom-callout--${i + 1}">
-          <span>${label}</span>
+          <span>${formatCalloutLabel(label)}</span>
         </li>`
       )
       .join('');
     productCallouts.classList.remove('is-fading');
   }, 180);
+}
+
+function formatCalloutLabel(label) {
+  const words = label.split(' ');
+  if (words.length <= 1) return label;
+  const midpoint = Math.ceil(words.length / 2);
+  return `${words.slice(0, midpoint).join(' ')}<br>${words.slice(midpoint).join(' ')}`;
 }
 
 function renderFeatures(list, features, icons) {
@@ -329,13 +336,13 @@ const WHY_PILLARS = [
     accent: 'var(--pale-blue)',
     num: '01',
     title: '35+ Years of Expertise',
-    desc: 'Backed by decades of packaging knowledge and reliable manufacturing standards.',
+    desc: 'Backed by decades of packaging expertise and reliable manufacturing.',
   },
   {
     accent: 'var(--golden-glow)',
     num: '02',
     title: 'Unmatched Strength',
-    desc: 'Built to resist tearing, stretching, and everyday pressure.',
+    desc: 'Built to resist tearing, stretching, and everyday pressure without compromise.',
   },
   {
     accent: 'var(--mimi-pink)',
@@ -763,20 +770,60 @@ if (faqAccordion) {
 }
 
 // ===== CONTACT FORM =====
+const SERVICE_ID = "";
+const TEMPLATE_ID = "";
+const PUBLIC_KEY = "";
+
 const contactForm = document.getElementById('contactForm');
+const contactFormStatus = document.getElementById('contactFormStatus');
+const contactSubmit = contactForm?.querySelector('.contact-submit');
 
-contactForm?.addEventListener('submit', (e) => {
+function setContactStatus(message, isError = false) {
+  if (!contactFormStatus) return;
+  contactFormStatus.textContent = message;
+  contactFormStatus.hidden = false;
+  contactFormStatus.dataset.state = isError ? 'error' : 'success';
+}
+
+contactForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const formData = new FormData(contactForm);
-  const name = formData.get('name');
-  const email = formData.get('email');
-  const phone = formData.get('phone') || '—';
-  const message = formData.get('message');
+  contactFormStatus?.setAttribute('hidden', '');
 
-  const subject = encodeURIComponent(`EVVO Bags enquiry from ${name}`);
-  const body = encodeURIComponent(
-    `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`
-  );
+  if (!contactForm.checkValidity()) {
+    contactForm.reportValidity();
+    return;
+  }
 
-  window.location.href = `mailto:packingsolutionsjpr@gmail.com?subject=${subject}&body=${body}`;
+  if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+    setContactStatus('Email service is not configured yet. Please add EmailJS credentials.', true);
+    return;
+  }
+
+  if (!window.emailjs?.sendForm) {
+    setContactStatus('Email service could not be loaded. Please try again shortly.', true);
+    return;
+  }
+
+  const originalText = contactSubmit?.textContent;
+
+  try {
+    if (contactSubmit) {
+      contactSubmit.disabled = true;
+      contactSubmit.textContent = 'Sending...';
+    }
+
+    await window.emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, contactForm, {
+      publicKey: PUBLIC_KEY,
+    });
+
+    contactForm.reset();
+    setContactStatus('Thank you. Your enquiry has been sent successfully.');
+  } catch (error) {
+    setContactStatus('Something went wrong while sending your enquiry. Please try again.', true);
+  } finally {
+    if (contactSubmit) {
+      contactSubmit.disabled = false;
+      contactSubmit.textContent = originalText || 'Send Enquiry';
+    }
+  }
 });
