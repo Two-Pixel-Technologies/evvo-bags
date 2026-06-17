@@ -548,8 +548,9 @@ ul {
 }
 
 .hero-product-float {
-  animation: none;
+  animation: float-y 4s ease-in-out infinite;
   transform: scale(1.06);
+  will-change: transform;
 }
 
 .hero-product img {
@@ -687,8 +688,13 @@ ul {
 }
 
 @keyframes float-y {
+  0%, 100% { transform: translateY(0) scale(1.06); }
+  50% { transform: translateY(-10px) scale(1.06); }
+}
+
+@keyframes product-float-y {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-14px); }
+  50% { transform: translateY(-10px); }
 }
 
 /* ===== TRUST STRIP ===== */
@@ -1506,6 +1512,8 @@ showroom-orbit-ring--2::before,
   justify-content: center;
   width: 100%;
   padding-bottom: 0.35rem;
+  animation: product-float-y 3.5s ease-in-out infinite;
+  will-change: transform;
 }
 
 .showroom-product img {
@@ -2385,6 +2393,7 @@ showroom-orbit-ring--2::before,
   position: relative;
   overflow: hidden;
   background:#E5E9D7;
+  scroll-margin-top: 80px;
 }
 
 .faq::before {
@@ -3933,8 +3942,8 @@ showroom-orbit-ring--2::before,
   }
 
   .showroom-product img {
-    max-height: clamp(190px, 42vw, 240px);
-    max-width: 10rem;
+    max-height: clamp(215px, 48vw, 270px);
+    max-width: 11.35rem;
   }
 
   .showroom-pedestal-disc {
@@ -4468,7 +4477,8 @@ showroom-orbit-ring--2::before,
   }
 
   .showroom-product img {
-    max-height: clamp(170px, 36vw, 220px);
+    max-height: clamp(195px, 42vw, 240px);
+    max-width: 10.85rem;
   }
 
   .hero-shell {
@@ -4523,6 +4533,10 @@ showroom-orbit-ring--2::before,
   }
 
   .products-visual img {
+    animation: none;
+  }
+
+  .showroom-product {
     animation: none;
   }
 
