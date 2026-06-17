@@ -2983,12 +2983,30 @@ showroom-orbit-ring--2::before,
 }
 
 .footer-col a {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 0.875rem;
   font-weight: 300;
   color: rgba(247, 241, 228, 0.5);
   margin-bottom: 0.65rem;
   transition: color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.footer-col a svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex: 0 0 auto;
+  color: var(--greenish-beige);
+  opacity: 0.72;
+}
+
+.footer-col a span {
+  min-width: 0;
+}
+
+.footer-col a:not(:has(svg)) {
+  display: block;
 }
 
 .footer-col a:hover {
@@ -4224,8 +4242,31 @@ showroom-orbit-ring--2::before,
   }
 
   .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.35rem 1.25rem;
+    padding-bottom: 1.35rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .footer-brand,
+  .footer-col:nth-of-type(3) {
+    grid-column: 1 / -1;
+  }
+
+  .footer-logo {
+    margin-bottom: 0.55rem;
+  }
+
+  .footer-tagline {
+    max-width: 100%;
+  }
+
+  .footer-col h4 {
+    margin-bottom: 0.65rem;
+  }
+
+  .footer-col a {
+    margin-bottom: 0.5rem;
   }
 
   .footer-bottom {
@@ -4435,7 +4476,7 @@ showroom-orbit-ring--2::before,
   }
 
   .footer {
-    padding: 1.5rem max(1rem, 5vw) 1rem;
+    padding: 1.25rem max(1rem, 5vw) 0.85rem;
   }
 
   .mob-close {

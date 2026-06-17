@@ -49,6 +49,18 @@ document.querySelectorAll('.mob-link').forEach((link) => {
   });
 });
 
+document.querySelectorAll('.footer a[href^="#"]').forEach((link) => {
+  link.addEventListener('click', (event) => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if (!target) return;
+
+    event.preventDefault();
+    const navHeight = nav?.offsetHeight || 65;
+    const targetTop = target.getBoundingClientRect().top + window.scrollY - navHeight;
+    window.scrollTo({ top: targetTop, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+  });
+});
+
 if (burger) {
   burger.addEventListener('click', () => {
     if (mobNav.classList.contains('open')) {
